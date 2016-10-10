@@ -84,6 +84,65 @@ class Cluster:
 
 
 
+# set of all the clusters
+clusters = set()
+radius_threshold = 3.0
+
+def increSTS(new_comment):
+	if len(clusters) == 0:
+		c = Cluster()
+		c.add_comment(new_comment)
+		clusters.add(c)
+		return
+	ca = [cluster for cluster in clusters if cluster.get_distance_from_center(new_comment) != float("inf")]
+	cb = [cluster for cluster in ca if cluster.get_distance_from_center(new_comment) < radius_threshold]
+
+	if len(cb) != 0:
+		cb.sort(key = lambda c: len(c.comments))
+		cadded = cb[0]
+		cadded.add_comment(new_comment)
+		cchanged = set()
+		for cluster in ca:
+			if cluster == cadded:
+				continue
+			for comment in cluster.comments:
+				if cadded.get_distance_from_center(comment) < radius_threshold:
+					cadded.add_comment(comment)
+					cluster.remove_comment(comment)
+					cchanged.add(cluster)
+		for cluster in cchanged:
+			V = [comment for comment in cluster.comments if cluster.get_distance_from_center(comment) > radius_threshold]
+			for excluded_comment in V:
+				cluster.remove_comment(excluded_comment)
+				clusters.sort(key = lambda c: len(c.comments))
+				added = False
+				for candidate_cluster in clusters:
+					if candidate_cluster.get_distance_from_center(excluded_comment) < radius_threshold:
+						candidate_cluster.add_comment(excluded_comment)
+						added = True
+						break
+				if not added:
+					c = Cluster()
+					c.add_comment(new_comment)
+					clusters.add(c)
+					return
+
+	else:
+		c = Cluster()
+		c.add_comment(new_comment)
+		clusters.add(c)
+		return
+
+
+
+
+
+		
+
+
+
+
+
 if __name__ == "__main__":
 	c = Cluster()
 	c.add_comment("This is a cooooomment")
