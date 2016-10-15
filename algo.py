@@ -92,7 +92,7 @@ class Cluster:
 
 def get_comments():
 	comments = []
-	f = open("comments.txt", "r")
+	f = open("ri_comments.txt", "r")
 	x = f.read()
 	for line in x.split("\n"):
 		if ":" not in line:
@@ -103,7 +103,7 @@ def get_comments():
 		comments.append(line)
 	return comments
 
-radius_threshold = 3.0
+radius_threshold = 2.5
 
 def increSTS(new_comment, clusters):
 	new_comment = nlp.preprocess(new_comment)
@@ -206,5 +206,5 @@ if __name__ == "__main__":
 
 
 
-
+#radius threshold 2.5 and T = 50 worked better with Rihanna
 #radius threshold 3.0 and T = 40 gave good results for Disney
