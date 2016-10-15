@@ -15,7 +15,7 @@ def preprocess(comment):
 	tokens = [replace_three_or_more(token) for token in tokens]
 	tokens = [porter.stem(token) for token in tokens]
 	comment = " ".join(tokens)
-	print "[[preprocessed = ||", comment, "|| = ]]"
+	# print "[[preprocessed = ||", comment, "|| = ]]"
 	return comment
 
 def remove_stopwords(term):

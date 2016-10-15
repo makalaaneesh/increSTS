@@ -2,7 +2,7 @@ import nlp
 
 # constants
 D = 2
-T = 15
+T = 40
 
 def get_term_vector(comment):
 	terms = []
