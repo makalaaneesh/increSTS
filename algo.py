@@ -14,7 +14,7 @@ class Cluster:
 		# comment = nlp.preprocess(comment)
 		self.comments.append(comment)
 
-		term_vector = metrics.get_term_vector(comment)
+		term_vector = list(set(metrics.get_term_vector(comment)))
 		self.comment_term_vectors.append(term_vector)
 
 		# terms = []
@@ -37,14 +37,24 @@ class Cluster:
 		if comment not in self.comments:
 			print "Comment does not exist in cluster"
 			return
+		index = self.comments.index(comment)
 		self.comments.remove(comment)
-		for term in self.terms.keys():
-			try:
-				# print term
-				self.terms[term].remove(comment)
-				self.center[term] -= 1
-			except (ValueError, KeyError):
-				pass
+		tv =  self.comment_term_vectors[index]
+		# print tv
+		# print list(clusters).index(self)
+		for term in tv:
+			self.terms[term].remove(comment)
+			self.center[term] -= 1
+
+		del self.comment_term_vectors[index]
+
+		# for term in self.terms.keys():
+		# 	try:
+		# 		# print term
+		# 		self.terms[term].remove(comment)
+		# 		self.center[term] -= 1
+		# 	except (ValueError, KeyError):
+		# 		pass
 
 
 
@@ -56,6 +66,7 @@ class Cluster:
 			term_vector = set(metrics.get_term_vector(comment))
 		center_term_vector = set(self.center.keys())
 		intersection = term_vector & center_term_vector
+		common_terms = len(intersection)
 		for term in intersection:
 			sim = sim + min(self.center[term],2)
 		sim = float(sim)
@@ -67,9 +78,9 @@ class Cluster:
 		# print "sim 2",sim
 
 		if sim == float(0):
-			return float("inf")
+			return float("inf"),common_terms
 		else:
-			return (1.0/sim) - 1.0
+			return (1.0/sim) - 1.0, common_terms
 
 
 	def get_radius(self):
@@ -92,7 +103,7 @@ class Cluster:
 
 def get_comments():
 	comments = []
-	f = open("ri_comments.txt", "r")
+	f = open("comments.txt", "r")
 	x = f.read()
 	for line in x.split("\n"):
 		if ":" not in line:
@@ -103,7 +114,8 @@ def get_comments():
 		comments.append(line)
 	return comments
 
-radius_threshold = 2.5
+radius_threshold = 3.0
+TH_TERMS  = 7
 
 def increSTS(new_comment, clusters):
 	new_comment = nlp.preprocess(new_comment)
@@ -117,16 +129,16 @@ def increSTS(new_comment, clusters):
 	ca = []
 	cb = []
 	for cluster in clusters:
-		dist = cluster.get_distance_from_center(new_comment, term_vector)
-		if dist != float("inf"):
+		dist, terms = cluster.get_distance_from_center(new_comment, term_vector)
+		if terms > 0:
 			ca.append(cluster)
-		if dist < radius_threshold:
+		if terms > TH_TERMS:
 			cb.append(cluster)
 	# ca = [cluster for cluster in clusters if cluster.get_distance_from_center(new_comment, term_vector) != float("inf")]
 	# cb = [cluster for cluster in ca if cluster.get_distance_from_center(new_comment,term_vector) < radius_threshold]
 
 	if len(cb) != 0:
-		cb.sort(key = lambda c: len(c.comments))
+		cb.sort(key = lambda c: len(c.comments),reverse = True)
 		cadded = cb[0]
 		cadded.add_comment(new_comment)
 		cchanged = set()
@@ -135,7 +147,7 @@ def increSTS(new_comment, clusters):
 				continue
 			for i, comment in enumerate(cluster.comments):
 				tv = set(cluster.comment_term_vectors[i])
-				if cadded.get_distance_from_center(comment,tv) < radius_threshold:
+				if cadded.get_distance_from_center(comment,tv)[1] > TH_TERMS:
 					cadded.add_comment(comment)
 					cluster.remove_comment(comment)
 					cchanged.add(cluster)
@@ -145,7 +157,7 @@ def increSTS(new_comment, clusters):
 			Vtv = []
 			for i, comment in enumerate(cluster.comments):
 				tv = set(cluster.comment_term_vectors[i])
-				if cluster.get_distance_from_center(comment, tv) > radius_threshold:
+				if cluster.get_distance_from_center(comment, tv)[1] <= TH_TERMS:
 					V.append(comment)
 					Vtv.append(tv)
 
@@ -156,7 +168,7 @@ def increSTS(new_comment, clusters):
 				clusters_list.sort(key = lambda c: len(c.comments),reverse = True)
 				added = False
 				for candidate_cluster in clusters_list:
-					if candidate_cluster.get_distance_from_center(excluded_comment,excluded_comment_tv) < radius_threshold:
+					if candidate_cluster.get_distance_from_center(excluded_comment,excluded_comment_tv)[1] > TH_TERMS:
 						candidate_cluster.add_comment(excluded_comment)
 						added = True
 						break
@@ -208,3 +220,9 @@ if __name__ == "__main__":
 
 #radius threshold 2.5 and T = 50 worked better with Rihanna
 #radius threshold 3.0 and T = 40 gave good results for Disney
+
+
+
+
+
+# [Tue Oct 18 15:09:30.603955 2016] [:error] [pid 10966] {'status': 200, 'transaction_amount': 1250L, 'hash': 'ba2c8dcc7b1554f5cc08c0c9f3a330821b76b606c2a64a36a3b9ee8c850f4c533110cbd7b64a53e853c8d67dab4a4147e7987e30856c125d9913de07682d493b', 'message': 'Transaction created', 'salt': 'vlqHgOcF', 'transaction_id': 'a29a9fa04d2a4a5098ba2a5280b7a'}

@@ -1,7 +1,7 @@
 from nltk import ngrams
 from nltk.tokenize import RegexpTokenizer
 from nltk.corpus import stopwords
-from nltk import stem
+from nltk import stem 
 import re
 def extract_ngrams(sentence, n):
 	grams = ngrams(sentence.split(), n)

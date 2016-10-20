@@ -2,11 +2,12 @@ import nlp
 
 # constants
 D = 2
-T = 50
+T = 1
+NGRAM = 5
 
 def get_term_vector(comment):
 	terms = []
-	for i in range(1,4):
+	for i in range(1,NGRAM+1):
 		# for 1,2,3
 		iterms = nlp.extract_ngrams(comment, i)
 		terms  = terms + iterms
