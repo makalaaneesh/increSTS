@@ -1,20 +1,30 @@
 from nltk import ngrams
 from nltk.tokenize import RegexpTokenizer
+from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from nltk import stem 
 import re
+import string
+
+regex = re.compile('[%s]' % re.escape(string.punctuation)) 
+
+
 def extract_ngrams(sentence, n):
 	grams = ngrams(sentence.split(), n)
 	return list(grams)
 
 def preprocess(comment):
-	tokenizer = RegexpTokenizer(r'\w+') # tokenizer that picks out alphanumeric characters as tokens and drop everything else like punctuations
+	# tokenizer = RegexpTokenizer(r'\w+') # tokenizer that picks out alphanumeric characters as tokens and drop everything else like punctuations
 	porter = stem.porter.PorterStemmer()
 	comment = comment.lower()
-	tokens = tokenizer.tokenize(comment)
+
+	comment = regex.sub('',comment)
+	tokens = word_tokenize(comment)
+	# tokens = tokenizer.tokenize(comment)
 	tokens = [replace_three_or_more(token) for token in tokens]
 	tokens = [porter.stem(token) for token in tokens]
 	comment = " ".join(tokens)
+	comment = comment.strip()
 	# print "[[preprocessed = ||", comment, "|| = ]]"
 	return comment
 

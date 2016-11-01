@@ -42,19 +42,17 @@ class Cluster:
 		tv =  self.comment_term_vectors[index]
 		# print tv
 		# print list(clusters).index(self)
+		
+
 		for term in tv:
-			self.terms[term].remove(comment)
-			self.center[term] -= 1
+			try:
+				# print term
+				self.terms[term].remove(comment)
+				self.center[term] -= 1
+			except (ValueError, KeyError):
+				pass
 
 		del self.comment_term_vectors[index]
-
-		# for term in self.terms.keys():
-		# 	try:
-		# 		# print term
-		# 		self.terms[term].remove(comment)
-		# 		self.center[term] -= 1
-		# 	except (ValueError, KeyError):
-		# 		pass
 
 
 
@@ -103,7 +101,7 @@ class Cluster:
 
 def get_comments():
 	comments = []
-	f = open("comments.txt", "r")
+	f = open("ri_comments.txt", "r")
 	x = f.read()
 	for line in x.split("\n"):
 		if ":" not in line:
@@ -112,9 +110,10 @@ def get_comments():
 		line = line.strip()
 		line = line.decode("utf-8")
 		comments.append(line)
+	# print comments
 	return comments
 
-radius_threshold = 3.0
+# radius_threshold = 3.0
 TH_TERMS  = 7
 
 def increSTS(new_comment, clusters):
@@ -130,7 +129,7 @@ def increSTS(new_comment, clusters):
 	cb = []
 	for cluster in clusters:
 		dist, terms = cluster.get_distance_from_center(new_comment, term_vector)
-		if terms > 0:
+		if dist != float("inf"):
 			ca.append(cluster)
 		if terms > TH_TERMS:
 			cb.append(cluster)
@@ -160,23 +159,30 @@ def increSTS(new_comment, clusters):
 				if cluster.get_distance_from_center(comment, tv)[1] <= TH_TERMS:
 					V.append(comment)
 					Vtv.append(tv)
-
-			for i, excluded_comment in enumerate(V):
-				excluded_comment_tv = Vtv[i]
-				cluster.remove_comment(excluded_comment)
-				clusters_list = list(clusters)
-				clusters_list.sort(key = lambda c: len(c.comments),reverse = True)
-				added = False
-				for candidate_cluster in clusters_list:
-					if candidate_cluster.get_distance_from_center(excluded_comment,excluded_comment_tv)[1] > TH_TERMS:
-						candidate_cluster.add_comment(excluded_comment)
-						added = True
-						break
-				if not added:
-					c = Cluster()
-					c.add_comment(new_comment)
-					clusters.add(c)
-					return
+			while len(V) > 0:
+				for i, excluded_comment in enumerate(V):
+					excluded_comment_tv = Vtv[i]
+					cluster.remove_comment(excluded_comment)
+					clusters_list = list(clusters)
+					clusters_list.sort(key = lambda c: len(c.comments),reverse = True)
+					added = False
+					for candidate_cluster in clusters_list:
+						if candidate_cluster.get_distance_from_center(excluded_comment,excluded_comment_tv)[1] > TH_TERMS:
+							candidate_cluster.add_comment(excluded_comment)
+							added = True
+							break
+					if not added:
+						c = Cluster()
+						c.add_comment(new_comment)
+						clusters.add(c)
+						
+				V = []
+				Vtv = []
+				for i, comment in enumerate(cluster.comments):
+					tv = set(cluster.comment_term_vectors[i])
+					if cluster.get_distance_from_center(comment, tv)[1] <= TH_TERMS:
+						V.append(comment)
+						Vtv.append(tv)
 
 	else:
 		c = Cluster()
