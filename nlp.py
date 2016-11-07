@@ -6,6 +6,23 @@ from nltk import stem
 import re
 import string
 
+
+def lcs(xstr, ystr):
+    """
+    >>> lcs('thisisatest', 'testing123testing')
+    'tsitest'
+    """
+    if not xstr or not ystr:
+        return ""
+    x, xs, y, ys = xstr[0], xstr[1:], ystr[0], ystr[1:]
+    if x == y:
+        return x + lcs(xs, ys)
+    else:
+        return max(lcs(xstr, ys), lcs(xs, ystr), key=len)
+
+
+
+
 regex = re.compile('[%s]' % re.escape(string.punctuation)) 
 
 
@@ -45,8 +62,10 @@ def replace_three_or_more(s):
 
 if __name__ == "__main__":
 
-	preprocess("Hello!! THis is a sentence with a lot of punctuations...")
-	print type(replace_three_or_more("sooooo"))
-	new_tuple = remove_stopwords(('i','am','here'))
-	print new_tuple
+	# preprocess("Hello!! THis is a sentence with a lot of punctuations...")
+	# print type(replace_three_or_more("sooooo"))
+	# new_tuple = remove_stopwords(('i','am','here'))
+	# print new_tuple
+
+	print lcs("AGGTAB","GXTXAYB")
 
