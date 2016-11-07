@@ -23,6 +23,7 @@ THRESHOLD_VALUE = 10
 GRAPH_SETTING=False
 STEPS_VALUE = 5
 MAX_HITS = 4
+MAX_WORDS = 4
 
 class ContextNode(object):
 	"""docstring for ContextNode"""
@@ -211,6 +212,14 @@ def constructGraph(list_of_ngrams,ngram_size):
 
 
 def randomwalk(B,X,Y):
+	"""Random walk implementation
+	
+	This is the random walk implementation
+	Arguments:
+		B {Networkx graphs} -- Networkx graph that is created
+		X {WordNodes} -- List of WordNode
+		Y {ContextNodes} -- List of ContextNodes
+	"""
 	#Create weight probabities:
 	A = nx.to_numpy_matrix(B)
 	print A
@@ -248,17 +257,6 @@ def randomwalk(B,X,Y):
 					hits = hits + 1
 					row_array = P[source_node_index,None,:]
 					row_array[0,start_node_index]=0
-					# row_array[0,start_node_index]=0
-					#Find better way for this
-					# if type(node_list[source_node_index]) is ContextNode:
-					# 	for i in range(0,len(node_list)):
-					# 		if type(node_list[i]) is ContextNode:
-					# 			row_array[0,i]=0
-					# if type(node_list[source_node_index]) is WordNode:
-					# 	for i in range(0,len(node_list)):
-					# 		if type(node_list[i]) is WordNode:
-					# 			row_array[0,i]=0
-					#End find better way
 					source_node_index = np.argmax(row_array)
 					if row_array[0,source_node_index] == 0:
 						print "No where to go"
@@ -271,7 +269,30 @@ def randomwalk(B,X,Y):
 				print "STEP Done"
 				r_matrix[start_node_index,source_node_index]=r_matrix[start_node_index,source_node_index]+1
 				hit_matrix[start_node_index,source_node_index]=hits
-	pdb.set_trace()
+	H_matrix = np.true_divide(hit_matrix,r_matrix)
+	where_are_NaNs = np.isnan(H_matrix)
+	H_matrix[where_are_NaNs] = 0.
+	print "==========Final H Matrix==========="
+	print H_matrix
+	for i in range(0,len(node_list)):
+		total = 0.0
+		for j in range(0,len(node_list)):
+			total = total + H_matrix[i,j]
+		if total!=0:
+			for j in range(0,len(node_list)):
+				H_matrix[i,j] = H_matrix[i,j]/total
+	print H_matrix
+	final_word_map={}
+	for node_index in range(0,len(node_list)):
+		if type(node_list[node_index]) is WordNode and node_list[node_index].isNoisy:
+			final_word_map[str(node_list[node_index])]=[]
+			# pdb.set_trace()
+			row_array = H_matrix[node_index,None,:]
+			row_array = np.asarray(np.argsort(row_array,axis=1)).reshape(-1)[::-1]
+			for word_index in range(0,MAX_WORDS):
+				final_word_map[str(node_list[node_index])].append(str(node_list[row_array[word_index]]))
+	print final_word_map
+
 
 
 if __name__ == "__main__":
