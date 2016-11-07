@@ -228,35 +228,44 @@ def randomwalk(B,X,Y):
 				A[i,j] = A[i,j]/total
 	print A
 	#Random walks algorithm
+	A_mask = np.ma.masked_where(A==0., A)
+
 	for node_index in range(0,len(node_list)):
 		if type(node_list[node_index]) is WordNode and node_list[node_index].isNoisy:
 			start_node_index = node_index
 			source_node_index = node_index
-			for i in range(1,STEPS_VALUE+1):
+			for i in range(1,STEPS_VALUE+1,2):
 				start_node_index = node_index
 				source_node_index = node_index
 				P = np.linalg.matrix_power(A,i)
+				P = np.ma.masked_array(P, A_mask.mask)
+				np.ma.set_fill_value(P, 0.)
+				P = P.filled()
 				hits = 0
 				print "STEP "+str(i)
 				print node_list[start_node_index]
 				while (type(node_list[source_node_index]) is ContextNode) or (type(node_list[source_node_index]) is WordNode and node_list[source_node_index].isNoisy) or (hits < MAX_HITS):
 					hits = hits + 1
 					row_array = P[source_node_index,None,:]
+					row_array[0,start_node_index]=0
 					# row_array[0,start_node_index]=0
 					#Find better way for this
-					if type(node_list[source_node_index]) is ContextNode:
-						for i in range(0,len(node_list)):
-							if type(node_list[i]) is ContextNode:
-								row_array[0,i]=0
-					if type(node_list[source_node_index]) is WordNode:
-						for i in range(0,len(node_list)):
-							if type(node_list[i]) is WordNode:
-								row_array[0,i]=0
+					# if type(node_list[source_node_index]) is ContextNode:
+					# 	for i in range(0,len(node_list)):
+					# 		if type(node_list[i]) is ContextNode:
+					# 			row_array[0,i]=0
+					# if type(node_list[source_node_index]) is WordNode:
+					# 	for i in range(0,len(node_list)):
+					# 		if type(node_list[i]) is WordNode:
+					# 			row_array[0,i]=0
 					#End find better way
 					source_node_index = np.argmax(row_array)
+					if row_array[0,source_node_index] == 0:
+						print "No where to go"
+						break
 					print "->"
 					print node_list[source_node_index]
-					pdb.set_trace()
+					# pdb.set_trace()
 					if (type(node_list[source_node_index]) is WordNode and not node_list[source_node_index].isNoisy) or (hits >= MAX_HITS):
 						break
 				print "STEP Done"
