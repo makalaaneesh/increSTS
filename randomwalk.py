@@ -4,6 +4,8 @@ from networkx.algorithms import bipartite
 import math
 import matplotlib.pyplot as plt
 from nltk.corpus import gutenberg
+import numpy as np
+import pdb
 
 """
 ============================
@@ -19,6 +21,8 @@ This is a script to implement random walks
 word_list = {}
 THRESHOLD_VALUE = 10
 GRAPH_SETTING=False
+STEPS_VALUE = 5
+MAX_HITS = 4
 
 class ContextNode(object):
 	"""docstring for ContextNode"""
@@ -157,7 +161,7 @@ def constructGraph(list_of_ngrams,ngram_size):
 					reap_word=1
 					w = WordNode_list[word]
 				else:
-					w = WordNode(word,word in word_list and word_list[word]>THRESHOLD_VALUE)
+					w = WordNode(word,not(word in word_list and word_list[word]>THRESHOLD_VALUE))
 					B.add_node(w,bipartite=1)
 					WordNode_list[word]=w
 				#Weight 
@@ -208,35 +212,57 @@ def constructGraph(list_of_ngrams,ngram_size):
 
 def randomwalk(B,X,Y):
 	#Create weight probabities:
-	weighted_probability={}
-	for string_val,node in Y.items():
-		weighted_probability[node]={}
-		total_weight=0
-		print node
-		print "-+-+-+-+-+-+-"
-		for edge in B.edges(node,data=True):
-			print edge
-			total_weight=total_weight+int(edge[2]['weight'])
-		print total_weight
-		for edge in B.edges(node,data=True):
-			print edge
-			weighted_probability[node][edge[1]]=float((float(edge[2]['weight'])/float(total_weight)))
-		print "========++++==============="
-	for string_val,node in X.items():
-		weighted_probability[node]={}
-		total_weight=0
-		print node
-		print "-+-+-+-+-+-+-"
-		for edge in B.edges(node,data=True):
-			print edge
-			total_weight=total_weight+edge[2]['weight']
-		print total_weight
-		for edge in B.edges(node,data=True):
-			print edge
-			weighted_probability[node][edge[1]]=float((float(edge[2]['weight'])/float(total_weight)))
-		print "========++++==============="
-	print "---------------Final-----------------"
-	print weighted_probability
+	A = nx.to_numpy_matrix(B)
+	print A
+	node_list = B.nodes()
+	hit_matrix = np.array([[0 for node1 in node_list] for node2 in node_list])
+	r_matrix = np.array([[0 for node1 in node_list] for node2 in node_list])
+	norm_matrix = np.array([[0 for node1 in node_list] for node2 in node_list])
+	cost_matrix = np.array([[0 for node1 in node_list] for node2 in node_list])
+	for i in range(0,len(node_list)):
+		total = 0.0
+		for j in range(0,len(node_list)):
+			total = total + A[i,j]
+		if total!=0:
+			for j in range(0,len(node_list)):
+				A[i,j] = A[i,j]/total
+	print A
+	#Random walks algorithm
+	for node_index in range(0,len(node_list)):
+		if type(node_list[node_index]) is WordNode and node_list[node_index].isNoisy:
+			start_node_index = node_index
+			source_node_index = node_index
+			for i in range(1,STEPS_VALUE+1):
+				start_node_index = node_index
+				source_node_index = node_index
+				P = np.linalg.matrix_power(A,i)
+				hits = 0
+				print "STEP "+str(i)
+				print node_list[start_node_index]
+				while (type(node_list[source_node_index]) is ContextNode) or (type(node_list[source_node_index]) is WordNode and node_list[source_node_index].isNoisy) or (hits < MAX_HITS):
+					hits = hits + 1
+					row_array = P[source_node_index,None,:]
+					# row_array[0,start_node_index]=0
+					#Find better way for this
+					if type(node_list[source_node_index]) is ContextNode:
+						for i in range(0,len(node_list)):
+							if type(node_list[i]) is ContextNode:
+								row_array[0,i]=0
+					if type(node_list[source_node_index]) is WordNode:
+						for i in range(0,len(node_list)):
+							if type(node_list[i]) is WordNode:
+								row_array[0,i]=0
+					#End find better way
+					source_node_index = np.argmax(row_array)
+					print "->"
+					print node_list[source_node_index]
+					pdb.set_trace()
+					if (type(node_list[source_node_index]) is WordNode and not node_list[source_node_index].isNoisy) or (hits >= MAX_HITS):
+						break
+				print "STEP Done"
+				r_matrix[start_node_index,source_node_index]=r_matrix[start_node_index,source_node_index]+1
+				hit_matrix[start_node_index,source_node_index]=hits
+	pdb.set_trace()
 
 
 if __name__ == "__main__":
