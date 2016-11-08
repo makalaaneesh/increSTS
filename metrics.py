@@ -6,6 +6,7 @@ T = 1
 NGRAM = 5
 
 def get_term_vector(comment):
+	# print "COMMENT", "[[[", comment, "]]]"
 	terms = []
 	for i in range(1,NGRAM+1):
 		# for 1,2,3
@@ -13,7 +14,11 @@ def get_term_vector(comment):
 		terms  = terms + iterms
 	# print terms
 	terms = [term for term in terms if len(nlp.remove_stopwords(term)) > 0]
-	return terms
+	stemmed_terms = []
+	for term in terms:
+		stemmed_term = tuple(map(nlp.porter_stem, term))
+		stemmed_terms.append(stemmed_term)
+	return stemmed_terms
 
 
 def comment_comment_similarity(comment1, comment2):

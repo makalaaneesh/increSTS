@@ -103,7 +103,7 @@ class Cluster:
 
 def get_comments():
 	comments = []
-	f = open("comments.txt", "r")
+	f = open("ri_comments.txt", "r")
 	x = f.read()
 	for line in x.split("\n"):
 		if ":" not in line:
