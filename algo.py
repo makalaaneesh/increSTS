@@ -33,12 +33,14 @@ class Cluster:
 			self.terms[term].add(comment)
 			self.center[term] += 1
 
-	def remove_comment(self, comment):
+	def remove_comment(self, comment, index):
 		if comment not in self.comments:
 			print "Comment does not exist in cluster"
 			return
-		index = self.comments.index(comment)
-		self.comments.remove(comment)
+
+		# index = self.comments.index(comment)
+		# self.comments.remove(comment)
+		del self.comments[index]
 		tv =  self.comment_term_vectors[index]
 		# print tv
 		# print list(clusters).index(self)
@@ -101,7 +103,7 @@ class Cluster:
 
 def get_comments():
 	comments = []
-	f = open("ri_comments.txt", "r")
+	f = open("comments.txt", "r")
 	x = f.read()
 	for line in x.split("\n"):
 		if ":" not in line:
@@ -148,21 +150,23 @@ def increSTS(new_comment, clusters):
 				tv = set(cluster.comment_term_vectors[i])
 				if cadded.get_distance_from_center(comment,tv)[1] > TH_TERMS:
 					cadded.add_comment(comment)
-					cluster.remove_comment(comment)
+					cluster.remove_comment(comment,i)
 					cchanged.add(cluster)
 		for cluster in cchanged:
 			# V = [comment for comment in cluster.comments if cluster.get_distance_from_center(comment) > radius_threshold]
 			V = []
+			Vindex = []
 			Vtv = []
 			for i, comment in enumerate(cluster.comments):
 				tv = set(cluster.comment_term_vectors[i])
 				if cluster.get_distance_from_center(comment, tv)[1] <= TH_TERMS:
 					V.append(comment)
+					Vindex.append(i)
 					Vtv.append(tv)
 			while len(V) > 0:
 				for i, excluded_comment in enumerate(V):
 					excluded_comment_tv = Vtv[i]
-					cluster.remove_comment(excluded_comment)
+					cluster.remove_comment(excluded_comment, Vindex[i])
 					clusters_list = list(clusters)
 					clusters_list.sort(key = lambda c: len(c.comments),reverse = True)
 					added = False
