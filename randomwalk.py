@@ -7,6 +7,7 @@ from nltk.corpus import gutenberg
 import numpy as np
 import pdb
 import stringcmp
+from collections import OrderedDict
 
 """
 ============================
@@ -300,7 +301,7 @@ def randomwalk(B,X,Y):
 				lcs_n_m = len(nlp.lcs(n,m))
 				max_length = max(len(n),len(m))
 				lcsr_n_m = float(lcs_n_m)/float(max_length)
-				edit_n_m = stringcmp.editex(n,m)
+				edit_n_m = nlp.editex("".join(OrderedDict.fromkeys(n)),"".join(OrderedDict.fromkeys(m)))
 				if edit_n_m !=0:
 					sim_cost_n_m = lcsr_n_m/edit_n_m
 					print sim_cost_n_m
@@ -317,7 +318,7 @@ def randomwalk(B,X,Y):
 			row_array = cost_matrix[node_index,None,:]
 			row_array = np.asarray(np.argsort(row_array,axis=1)).reshape(-1)[::-1]
 			for word_index in range(0,MAX_WORDS):
-				if type(node_list[row_array[word_index]]) is WordNode:
+				if type(node_list[row_array[word_index]]) is WordNode and not node_list[row_array[word_index]].isNoisy:
 					final_word_map[str(node_list[node_index])].append((str(node_list[row_array[word_index]]),cost_matrix[node_index,row_array[word_index]]))
 	print final_word_map
 
