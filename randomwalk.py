@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 from nltk.corpus import gutenberg
 import numpy as np
 import pdb
+import stringcmp
 
 """
 ============================
@@ -224,10 +225,10 @@ def randomwalk(B,X,Y):
 	A = nx.to_numpy_matrix(B)
 	print A
 	node_list = B.nodes()
-	hit_matrix = np.array([[0 for node1 in node_list] for node2 in node_list])
-	r_matrix = np.array([[0 for node1 in node_list] for node2 in node_list])
-	norm_matrix = np.array([[0 for node1 in node_list] for node2 in node_list])
-	cost_matrix = np.array([[0 for node1 in node_list] for node2 in node_list])
+	hit_matrix = np.array([[0. for node1 in node_list] for node2 in node_list])
+	r_matrix = np.array([[0. for node1 in node_list] for node2 in node_list])
+	norm_matrix = np.array([[0. for node1 in node_list] for node2 in node_list])
+	cost_matrix = np.array([[0. for node1 in node_list] for node2 in node_list])
 	for i in range(0,len(node_list)):
 		total = 0.0
 		for j in range(0,len(node_list)):
@@ -283,14 +284,41 @@ def randomwalk(B,X,Y):
 				H_matrix[i,j] = H_matrix[i,j]/total
 	print H_matrix
 	final_word_map={}
+	word_node_list = []
+
+	#Getting only the word node indices
+	for i in range(0,len(node_list)):
+		if type(node_list[i]) is WordNode:
+			word_node_list.append(i)
+
+	#Building the cost matrix
+	for i in word_node_list:
+		for j in word_node_list:
+			if i != j:
+				n = str(node_list[i])
+				m = str(node_list[j])
+				lcs_n_m = len(nlp.lcs(n,m))
+				max_length = max(len(n),len(m))
+				lcsr_n_m = float(lcs_n_m)/float(max_length)
+				edit_n_m = stringcmp.editex(n,m)
+				if edit_n_m !=0:
+					sim_cost_n_m = lcsr_n_m/edit_n_m
+					print sim_cost_n_m
+					cost_matrix[i,j] = float(H_matrix[i,j] + sim_cost_n_m)
+					# print "="
+					# print cost_matrix[i,j]
+	print "===========Final Cost Matrix================"
+	print cost_matrix
+	#Cost matrix done
 	for node_index in range(0,len(node_list)):
 		if type(node_list[node_index]) is WordNode and node_list[node_index].isNoisy:
 			final_word_map[str(node_list[node_index])]=[]
 			# pdb.set_trace()
-			row_array = H_matrix[node_index,None,:]
+			row_array = cost_matrix[node_index,None,:]
 			row_array = np.asarray(np.argsort(row_array,axis=1)).reshape(-1)[::-1]
 			for word_index in range(0,MAX_WORDS):
-				final_word_map[str(node_list[node_index])].append(str(node_list[row_array[word_index]]))
+				if type(node_list[row_array[word_index]]) is WordNode:
+					final_word_map[str(node_list[node_index])].append((str(node_list[row_array[word_index]]),cost_matrix[node_index,row_array[word_index]]))
 	print final_word_map
 
 
