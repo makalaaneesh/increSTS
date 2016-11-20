@@ -103,14 +103,16 @@ class Cluster:
 
 def get_comments():
 	comments = []
-	f = open("ri_comments.txt", "r")
+	f = open("comments.txt", "r")
 	x = f.read()
 	for line in x.split("\n"):
 		if ":" not in line:
+			print "ignored"
 			continue
 		line = line[line.index(":")+1:]
 		line = line.strip()
 		line = line.decode("utf-8")
+		line = line.encode("ascii","ignore")
 		comments.append(line)
 	# print comments
 	return comments
@@ -133,6 +135,7 @@ def increSTS(new_comment, clusters):
 		dist, terms = cluster.get_distance_from_center(new_comment, term_vector)
 		if dist != float("inf"):
 			ca.append(cluster)
+		# if dist < radius_threshold:
 		if terms > TH_TERMS:
 			cb.append(cluster)
 	# ca = [cluster for cluster in clusters if cluster.get_distance_from_center(new_comment, term_vector) != float("inf")]
@@ -148,6 +151,7 @@ def increSTS(new_comment, clusters):
 				continue
 			for i, comment in enumerate(cluster.comments):
 				tv = set(cluster.comment_term_vectors[i])
+				# if cadded.get_distance_from_center(comment,tv)[0] < radius_threshold:
 				if cadded.get_distance_from_center(comment,tv)[1] > TH_TERMS:
 					cadded.add_comment(comment)
 					cluster.remove_comment(comment,i)
@@ -159,6 +163,7 @@ def increSTS(new_comment, clusters):
 			Vtv = []
 			for i, comment in enumerate(cluster.comments):
 				tv = set(cluster.comment_term_vectors[i])
+				# if cluster.get_distance_from_center(comment, tv)[0] >= radius_threshold:
 				if cluster.get_distance_from_center(comment, tv)[1] <= TH_TERMS:
 					V.append(comment)
 					Vindex.append(i)
@@ -171,6 +176,7 @@ def increSTS(new_comment, clusters):
 					clusters_list.sort(key = lambda c: len(c.comments),reverse = True)
 					added = False
 					for candidate_cluster in clusters_list:
+						# if candidate_cluster.get_distance_from_center(excluded_comment,excluded_comment_tv)[0] < radius_threshold:
 						if candidate_cluster.get_distance_from_center(excluded_comment,excluded_comment_tv)[1] > TH_TERMS:
 							candidate_cluster.add_comment(excluded_comment)
 							added = True
@@ -184,6 +190,7 @@ def increSTS(new_comment, clusters):
 				Vtv = []
 				for i, comment in enumerate(cluster.comments):
 					tv = set(cluster.comment_term_vectors[i])
+					# if cluster.get_distance_from_center(comment, tv)[0] >= radius_threshold:
 					if cluster.get_distance_from_center(comment, tv)[1] <= TH_TERMS:
 						V.append(comment)
 						Vtv.append(tv)
@@ -216,7 +223,10 @@ if __name__ == "__main__":
 	# set of all the clusters
 	clusters = set()
 	comments = get_comments()
+	of = open("cleanedcomments.txt", "w")
+
 	for i, comment in enumerate(comments):
+		of.write(comment+"\n")
 		increSTS(comment, clusters)
 		print i," iteration complete---------", 
 		print "{len} clusters created".format(len=len(clusters))

@@ -2,7 +2,7 @@ import nlp
 
 # constants
 D = 2
-T = 1
+T = 40
 NGRAM = 5
 
 def get_term_vector(comment):

@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from nltk.corpus import gutenberg
 import numpy as np
 import pdb
-import stringcmp
+# import stringcmp
 from collections import OrderedDict
 
 """
@@ -93,7 +93,7 @@ def getallngrams():
 	"""
 	Getting all the ngrams
 	"""
-	f = open("commentstest.txt", "r")
+	f = open("cleanedcomments.txt", "r")
 	x = f.read()
 	ngrams_list=[]
 	for line in x.split("\n"):
@@ -102,6 +102,7 @@ def getallngrams():
 		# line = line[line.index(":")+1:]
 		line = line.strip()
 		line = line.decode("utf-8")
+		line = line.encode('ascii','ignore')
 		ngrams_list.append(nlp.extract_ngrams(line,3))
 	return ngrams_list
 
