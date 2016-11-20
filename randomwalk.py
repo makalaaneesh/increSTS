@@ -103,7 +103,8 @@ def getallngrams():
 		line = line.strip()
 		line = line.decode("utf-8")
 		line = line.encode('ascii','ignore')
-		ngrams_list.append(nlp.extract_ngrams(line,3))
+		line = nlp.preprocess(line)
+		ngrams_list.append(nlp.extract_ngrams(line,5))
 	return ngrams_list
 
 def isNoisyWord():
@@ -329,7 +330,7 @@ if __name__ == "__main__":
 	#Step 1: Get all ngrams from the text corpus
 	list_of_ngrams=getallngrams()
 	print list_of_ngrams
-	B,X,Y=constructGraph(list_of_ngrams,3)
+	B,X,Y=constructGraph(list_of_ngrams,5)
 	randomwalk(B,X,Y)
 
 
