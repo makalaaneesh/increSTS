@@ -329,27 +329,67 @@ def randomwalk(B,X,Y):
 					final_word_map[str(node_list[node_index])].append((str(node_list[row_array[word_index]]),cost_matrix[node_index,row_array[word_index]]))
 	print final_word_map
 
+
+def compute_probabilities(row):
+	total = row.sum()
+	newrow = np.true_divide(row, total)
+	np.put(row, range(0,len(row)), newrow)
+
+
+class MatrixPower(threading.Thread):
+	"""docstring for Client"""
+	def __init__(self,A, P, i, index):
+		threading.Thread.__init__(self)
+		# self.private_key = private_key
+		self.A = A
+		self.P = P
+		self.i = i
+		self.index = index
+		# print "Thread id : "+ str(self.thread_count)
+
+	def run(self):
+		new_matrix = np.linalg.matrix_power(self.A,self.i)
+		self.P[self.index] = new_matrix 
+
+
 def init_randomwalk(B):
 	print "INITING RANDOM WALK"
 	A = nx.to_numpy_matrix(B)
 	# print A
 	node_list = B.nodes()
 	node_len = len(node_list)
-	for i in range(0,len(node_list)):
-		total = 0.0
-		total = A[i,:].sum()
-		# for j in range(0,len(node_list)):
-		# 	total = total + A[i,j]
-		if total!=0:
-			A[i,:] = np.true_divide(A[i,:], total)
+
+	pool = ThreadPool(MAX_THREAD_POOL)
+	rows = [row for row in A]
+	pool.map(compute_probabilities, rows)
+	pool.close()
+	pool.join()
+	# for i in range(0,len(node_list)):
+	# 	total = 0.0
+	# 	total = A[i,:].sum()
+	# 	# for j in range(0,len(node_list)):
+	# 	# 	total = total + A[i,j]
+	# 	if total!=0:
+	# 		A[i,:] = np.true_divide(A[i,:], total)
 			# for j in range(0,len(node_list)):
 			# 	A[i,j] = A[i,j]/total
 	# print A
 	#Random walks algorithm
+	print "COMPLTED THREADS TO COMPUTE PROBABILITIES"
 	A_mask = np.ma.masked_where(A==0., A)
-	P = []
-	for i in range(1,STEPS_VALUE+1,2):
-		P.append(np.linalg.matrix_power(A,i))
+	
+	powers = range(1,STEPS_VALUE+1,2)
+	P = [None for i in powers]
+	mxthreads = []
+	for index, i in enumerate(powers):
+		mx_thread = MatrixPower(A, P , i, index)
+		mxthreads.append(mx_thread)
+		mx_thread.start()
+
+		
+	for thread in mxthreads:
+		thread.join()
+
 	print "COMPLETED INITING RANDOM WALK"
 	return A,A_mask,node_list,P
 
