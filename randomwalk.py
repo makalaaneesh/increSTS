@@ -9,6 +9,8 @@ import pdb
 # import stringcmp
 from collections import OrderedDict
 import threading
+from datetime import datetime
+from multiprocessing.dummy import Pool as ThreadPool
 
 """
 ============================
@@ -20,13 +22,14 @@ This is a script to implement random walks
 """
 
 
-
+NGRAM = 5
 word_list = {}
 THRESHOLD_VALUE = 10
 GRAPH_SETTING=False
 STEPS_VALUE = 5
 MAX_HITS = 4
 MAX_WORDS = 4
+MAX_THREAD_POOL = 50
 
 class ContextNode(object):
 	"""docstring for ContextNode"""
@@ -94,7 +97,7 @@ def getallngrams():
 	"""
 	Getting all the ngrams
 	"""
-	f = open("commentstest.txt", "r")
+	f = open("cleanedcomments.txt", "r")
 	x = f.read()
 	ngrams_list=[]
 	for line in x.split("\n"):
@@ -104,8 +107,8 @@ def getallngrams():
 		line = line.strip()
 		line = line.decode("utf-8")
 		line = line.encode('ascii','ignore')
-		line = nlp.preprocess(line)
-		ngrams_list.append(nlp.extract_ngrams(line,5))
+		line = nlp.clean(line)
+		ngrams_list.append(nlp.extract_ngrams(line,NGRAM))
 	return ngrams_list
 
 def isNoisyWord():
@@ -180,15 +183,16 @@ def constructGraph(list_of_ngrams,ngram_size):
 				# print bottom_nodes
 				# print top_nodes
 	#Debug statemtns
-	X = set(n for n,d in B.nodes(data=True) if d['bipartite']==0)
-	Y = set(B) - X
-	print bipartite.is_bipartite(B)
+	print "Done****************"
+	# X = set(n for n,d in B.nodes(data=True) if d['bipartite']==0)
+	# Y = set(B) - X
+	# print bipartite.is_bipartite(B)
 	# pos = dict()
-	print X
-	print "-----------------------------------"
-	print Y
-	print "-----------------------------------"
-	print B.edges()
+	# print X
+	# print "-----------------------------------"
+	# print Y
+	# print "-----------------------------------"
+	# print B.edges()
 	if GRAPH_SETTING==True:
 		val_map = {'textnoisy': 1.0,
 	           'context': 0.5714285714285714,
@@ -326,27 +330,35 @@ def randomwalk(B,X,Y):
 	print final_word_map
 
 def init_randomwalk(B):
+	print "INITING RANDOM WALK"
 	A = nx.to_numpy_matrix(B)
-	print A
+	# print A
 	node_list = B.nodes()
 	node_len = len(node_list)
 	for i in range(0,len(node_list)):
 		total = 0.0
-		for j in range(0,len(node_list)):
-			total = total + A[i,j]
+		total = A[i,:].sum()
+		# for j in range(0,len(node_list)):
+		# 	total = total + A[i,j]
 		if total!=0:
-			for j in range(0,len(node_list)):
-				A[i,j] = A[i,j]/total
-	print A
+			A[i,:] = np.true_divide(A[i,:], total)
+			# for j in range(0,len(node_list)):
+			# 	A[i,j] = A[i,j]/total
+	# print A
 	#Random walks algorithm
 	A_mask = np.ma.masked_where(A==0., A)
 	P = []
 	for i in range(1,STEPS_VALUE+1,2):
 		P.append(np.linalg.matrix_power(A,i))
+	print "COMPLETED INITING RANDOM WALK"
 	return A,A_mask,node_list,P
 
 
-def randomwalk_thread(B,node_arr):
+def execute_thread(thread):
+	thread.start()
+	thread.join()
+
+def randomwalk_thread(B,node_arr,start_time):
 	"""Random walk threading function
 	
 	Threaded approach to random walk to improve speed
@@ -358,18 +370,39 @@ def randomwalk_thread(B,node_arr):
 	A,A_mask,node_list,P_arr = init_randomwalk(B)
 	random_walk_threads = []
 	final_word_map = {}
-	for node_index in node_arr:
+	total_count = 0
+	# for node_index in node_arr:
+	# 	if type(node_list[node_index]) is WordNode and node_list[node_index].isNoisy:
+	# 		total_count = total_count + 1
+	# print "Max threads created " + str(total_count)
+	for i, node_index in enumerate(node_arr):
 		if type(node_list[node_index]) is WordNode and node_list[node_index].isNoisy:
-			r = RandomWalk(node_index,A,A_mask,node_list,P_arr,final_word_map)
-			r.start()
+			r = RandomWalk(node_index,A,A_mask,node_list,P_arr,final_word_map,start_time)
+			print "Created {i}th thread".format(i = i)
+			# r.start()
 			random_walk_threads.append(r)
-	print "**********Total threads : "+ str(len(random_walk_threads))
-	for r in random_walk_threads:
-		r.join()
+
+	print "STARTING THREADSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+	p = ThreadPool(MAX_THREAD_POOL)
+	p.map(execute_thread, random_walk_threads)
+	p.close()
+	p.join()
+
+	# for i in range(0,len(random_walk_threads),MAX_THREAD_POOL):
+	# 	for j in range(i,i+MAX_THREAD_POOL):
+	# 		random_walk_threads[j].start()
+	# 	for j in range(i,i+MAX_THREAD_POOL):
+	# 		random_walk_threads[j].join()
+	# 	print "One pool of threads completed"
+	# print "**********Total threads : "+ str(len(random_walk_threads))
+	# for r in random_walk_threads:
+	# 	r.join()
+	print "FINAL WORD MAPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+	print final_word_map
 
 class RandomWalk(threading.Thread):
 	"""docstring for Client"""
-	def __init__(self,node_index,A,A_mask,node_list,P_arr,final_word_map):
+	def __init__(self,node_index,A,A_mask,node_list,P_arr,final_word_map,start_time):
 		threading.Thread.__init__(self)
 		# self.private_key = private_key
 		self.node_index = node_index
@@ -378,6 +411,7 @@ class RandomWalk(threading.Thread):
 		self.node_list = node_list
 		self.P_arr = P_arr
 		self.final_word_map = final_word_map
+		self.start_time = start_time
 		# print "Thread id : "+ str(self.thread_count)
 
 	def run(self):
@@ -463,16 +497,21 @@ class RandomWalk(threading.Thread):
 				if type(self.node_list[row_array[word_index]]) is WordNode and not self.node_list[row_array[word_index]].isNoisy:
 					self.final_word_map[str(self.node_list[node_index])].append((str(self.node_list[row_array[word_index]]),cost_matrix[row_array[word_index]]))
 		print self.final_word_map
+		end_time = datetime.now()
+		time_delta = end_time - self.start_time
+		print "Total time taken: "+ str(time_delta.seconds)+"s"
 
 
 
 if __name__ == "__main__":
 	#Step 1: Get all ngrams from the text corpus
+	start_time = datetime.now()
+	print "Starting time : "+ str(start_time)
 	list_of_ngrams=getallngrams()
-	print list_of_ngrams
-	B,X,Y=constructGraph(list_of_ngrams,5)
+	# print list_of_ngrams
+	B,X,Y=constructGraph(list_of_ngrams,NGRAM)
 	indexes = [i for i in range(0,len(B.nodes()))]
 	# randomwalk(B,X,Y)
-	randomwalk_thread(B,indexes)
+	randomwalk_thread(B,indexes,start_time)
 
 

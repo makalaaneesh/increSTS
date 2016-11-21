@@ -166,6 +166,16 @@ def porter_stem(word):
 	porter = stem.porter.PorterStemmer()
 	return porter.stem(word)
 
+
+def clean(comment):
+	comment = comment.lower()
+
+	comment = regex.sub('',comment)
+	comment = comment.strip()
+	# print "[[preprocessed = ||", comment, "|| = ]]"
+	return comment
+
+
 def preprocess(comment):
 	# tokenizer = RegexpTokenizer(r'\w+') # tokenizer that picks out alphanumeric characters as tokens and drop everything else like punctuations
 	
@@ -187,7 +197,7 @@ def remove_stopwords(term):
 
 
 def replace_three_or_more(s):
-    # pattern to look for three or more repetitions of any character, including
+    # pattern to look for three or more repetitions of any character, includings
     # newlines.
     pattern = re.compile(r"(.)\1{2,}", re.DOTALL) 
     return pattern.sub(r"\1", s)
