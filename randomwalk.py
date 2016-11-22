@@ -11,6 +11,7 @@ from collections import OrderedDict
 import threading
 from datetime import datetime
 from multiprocessing.dummy import Pool as ThreadPool
+import json
 
 """
 ============================
@@ -29,7 +30,7 @@ GRAPH_SETTING=False
 STEPS_VALUE = 5
 MAX_HITS = 4
 MAX_WORDS = 4
-MAX_THREAD_POOL = 50
+MAX_THREAD_POOL = 100
 
 class ContextNode(object):
 	"""docstring for ContextNode"""
@@ -97,7 +98,8 @@ def getallngrams():
 	"""
 	Getting all the ngrams
 	"""
-	f = open("cleanedcomments.txt", "r")
+	f = open("mixedcorpus.txt", "r")
+	# f = open("commentstest.txt", "r")
 	x = f.read()
 	ngrams_list=[]
 	for line in x.split("\n"):
@@ -119,12 +121,21 @@ def isNoisyWord():
 		word string -- [A variable]
 	"""
 	emma = gutenberg.words('austen-emma.txt')
+	watson_lines = open("cleancorpus.txt","r").read().split("\n")
+	for watson in watson_lines:
+		watson = watson.split(" ")
+		for word in watson:
+			if word in word_list.keys():
+				word_list[word]=word_list[word] + 1
+			else:
+				word_list[word]=1
+
 	flag=0
 	for word in emma:
 		if word in word_list.keys():
 			word_list[word]=word_list[word] + 1
 		else:
-			word_list[word]=0
+			word_list[word]=1
 
 
 def constructGraph(list_of_ngrams,ngram_size):
@@ -438,7 +449,12 @@ def randomwalk_thread(B,node_arr,start_time):
 	# for r in random_walk_threads:
 	# 	r.join()
 	print "FINAL WORD MAPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+	dict_str = json.dumps(final_word_map)
+	f = open("finaldictionary.json", "w")
+	f.write(dict_str)
+	f.close()
 	print final_word_map
+
 
 class RandomWalk(threading.Thread):
 	"""docstring for Client"""
