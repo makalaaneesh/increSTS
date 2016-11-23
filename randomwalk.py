@@ -30,7 +30,7 @@ GRAPH_SETTING=False
 STEPS_VALUE = 5
 MAX_HITS = 4
 MAX_WORDS = 4
-MAX_THREAD_POOL = 100
+MAX_THREAD_POOL = 60
 
 class ContextNode(object):
 	"""docstring for ContextNode"""
@@ -409,7 +409,7 @@ def execute_thread(thread):
 	thread.start()
 	thread.join()
 
-def randomwalk_thread(B,node_arr,start_time):
+def randomwalk_thread(B,node_arr,start_time,graph_time,init_time):
 	"""Random walk threading function
 	
 	Threaded approach to random walk to improve speed
@@ -454,6 +454,13 @@ def randomwalk_thread(B,node_arr,start_time):
 	f.write(dict_str)
 	f.close()
 	print final_word_map
+	end_time = datetime.now()
+	time_delta = end_time - start_time
+	time_delta_2 = start_time - graph_time
+	time_delta_3 = end_time - init_time
+	print "Total randomwalk time taken: "+ str(time_delta.seconds)+"s"
+	print "Total graph time taken: "+ str(time_delta_2.seconds)+"s"
+	print "Total time taken: "+ str(time_delta_3.seconds)+"s"
 
 
 class RandomWalk(threading.Thread):
@@ -561,13 +568,17 @@ class RandomWalk(threading.Thread):
 
 if __name__ == "__main__":
 	#Step 1: Get all ngrams from the text corpus
-	start_time = datetime.now()
-	print "Starting time : "+ str(start_time)
+	start_time_start = datetime.now()
+	print "Starting time : "+ str(start_time_start)
 	list_of_ngrams=getallngrams()
 	# print list_of_ngrams
+	graph_time = datetime.now()
+	print "Graph Starting time : "+ str(graph_time)
 	B,X,Y=constructGraph(list_of_ngrams,NGRAM)
 	indexes = [i for i in range(0,len(B.nodes()))]
 	# randomwalk(B,X,Y)
-	randomwalk_thread(B,indexes,start_time)
+	start_time = datetime.now()
+	print "Random walk Starting time : "+ str(start_time)
+	randomwalk_thread(B,indexes,start_time,graph_time,start_time_start)
 
 
