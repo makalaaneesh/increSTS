@@ -12,6 +12,7 @@ import threading
 from datetime import datetime
 from multiprocessing.dummy import Pool as ThreadPool
 import json
+from progressbar import ProgressBar
 
 """
 ============================
@@ -155,13 +156,16 @@ def constructGraph(list_of_ngrams,ngram_size):
 	reap_node=0
 	reap_word=0
 	center_index = int(math.floor(ngram_size/2))
-	for n_set in list_of_ngrams:
+	total_ngrams = len(list_of_ngrams)
+	print "No. of n grams "+ str(total_ngrams)
+	bar = ProgressBar()
+	for n_set in bar(list_of_ngrams):
 		if len(n_set)>0:
 			for n in n_set:
-				print 
-				print 
-				print "**************************************"
-				print n
+				# print 
+				# print 
+				# print "**************************************"
+				# print n
 				reap_node=0
 				reap_word=0
 				n=list(n)
@@ -169,7 +173,7 @@ def constructGraph(list_of_ngrams,ngram_size):
 				n[center_index]='*'
 				c=None
 				if str(n) in ContextNode_list:
-					print "Repeated node"
+					# print "Repeated node"
 					reap_node=1
 					c=ContextNode_list[str(n)]
 				else:
@@ -178,7 +182,7 @@ def constructGraph(list_of_ngrams,ngram_size):
 					ContextNode_list[str(n)]=c
 				w = None
 				if word in WordNode_list:
-					print "Repeated word"
+					# print "Repeated word"
 					reap_word=1
 					w = WordNode_list[word]
 				else:
@@ -187,11 +191,11 @@ def constructGraph(list_of_ngrams,ngram_size):
 					WordNode_list[word]=w
 				#Weight 
 				if reap_node==1 and reap_word==1 and (w in B[c]):
-					print "Testing"
+					# print "Testing"
 					B[c][w]['weight'] += 1
 				else:
 					B.add_edge(c, w, weight=1)
-				bottom_nodes, top_nodes = bipartite.sets(B)
+				# bottom_nodes, top_nodes = bipartite.sets(B)
 				# print bottom_nodes
 				# print top_nodes
 	#Debug statemtns
