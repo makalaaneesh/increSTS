@@ -99,8 +99,8 @@ def getallngrams():
 	"""
 	Getting all the ngrams
 	"""
-	# f = open("mixedcorpus.txt", "r")
-	f = open("commentstest.txt", "r")
+	f = open("mixedcorpus.txt", "r")
+	# f = open("commentstest.txt", "r")
 	x = f.read()
 	ngrams_list=[]
 	for line in x.split("\n"):
@@ -401,6 +401,7 @@ def init_randomwalk(B):
 		mx_thread = MatrixPower(A, P , i, index)
 		mxthreads.append(mx_thread)
 		mx_thread.start()
+		mx_thread.join()
 
 		
 	for thread in mxthreads:
