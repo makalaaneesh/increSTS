@@ -125,17 +125,18 @@ def isNoisyWord():
 	for watson in watson_lines:
 		watson = watson.split(" ")
 		for word in watson:
-			if word in word_list.keys():
+			if word in word_list:
 				word_list[word]=word_list[word] + 1
 			else:
 				word_list[word]=1
 
 	flag=0
 	for word in emma:
-		if word in word_list.keys():
+		if word in word_list:
 			word_list[word]=word_list[word] + 1
 		else:
 			word_list[word]=1
+	print "Done creating word list"
 
 
 def constructGraph(list_of_ngrams,ngram_size):
@@ -146,7 +147,7 @@ def constructGraph(list_of_ngrams,ngram_size):
 		list_of_ngrams {list} -- List of ngrams
 		ngram_size {int} -- ngram size
 	"""
-	isNoisyWord()
+	# isNoisyWord()
 	# print word_list
 	B = nx.Graph()
 	ContextNode_list={}
@@ -571,6 +572,7 @@ if __name__ == "__main__":
 	start_time_start = datetime.now()
 	print "Starting time : "+ str(start_time_start)
 	list_of_ngrams=getallngrams()
+	isNoisyWord()
 	# print list_of_ngrams
 	graph_time = datetime.now()
 	print "Graph Starting time : "+ str(graph_time)
