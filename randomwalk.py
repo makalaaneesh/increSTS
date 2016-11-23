@@ -99,8 +99,8 @@ def getallngrams():
 	"""
 	Getting all the ngrams
 	"""
-	f = open("mixedcorpus.txt", "r")
-	# f = open("commentstest.txt", "r")
+	# f = open("mixedcorpus.txt", "r")
+	f = open("commentstest.txt", "r")
 	x = f.read()
 	ngrams_list=[]
 	for line in x.split("\n"):
@@ -406,6 +406,10 @@ def init_randomwalk(B):
 	for thread in mxthreads:
 		thread.join()
 
+	for p in P:
+		p = np.ma.masked_array(p, A_mask.mask)
+		np.ma.set_fill_value(p, 0.)
+		p = p.filled()
 	print "COMPLETED INITING RANDOM WALK"
 	return A,A_mask,node_list,P
 
@@ -496,9 +500,9 @@ class RandomWalk(threading.Thread):
 			start_node_index = node_index
 			source_node_index = node_index
 			P = self.P_arr[i]
-			P = np.ma.masked_array(P, self.A_mask.mask)
-			np.ma.set_fill_value(P, 0.)
-			P = P.filled()
+			# P = np.ma.masked_array(P, self.A_mask.mask)
+			# np.ma.set_fill_value(P, 0.)
+			# P = P.filled()
 			hits = 0
 			print "STEP "+str(i)
 			print self.node_list[start_node_index]
