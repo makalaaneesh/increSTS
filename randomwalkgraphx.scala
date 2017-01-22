@@ -11,6 +11,7 @@ val filename = "edgelist"
 var vertexArray = ArrayBuffer[(VertexId,(String,Int))]()
 var VertexId :Long = 1L
 var EdgeArray = ArrayBuffer[Edge[Int]]()
+var vertex1 = 0L
 var vertex2 = 0L
 // var vertexpair = Array[(String,String)]();
 for(line <- Source.fromFile(filename).getLines()){
@@ -72,6 +73,3 @@ for(line <- Source.fromFile(filename).getLines()){
 val vertexRDD: RDD[(Long, (String, Int))] = sc.parallelize(vertexArray)
 val edgeRDD: RDD[Edge[Int]] = sc.parallelize(EdgeArray)
 val graph: Graph[(String, Int), Int] = Graph(vertexRDD, edgeRDD)
-for (triplet <- graph.triplets.filter(t => t.attr > 5).collect) {
-  println(s"${triplet.srcAttr._1} loves ${triplet.dstAttr._1}")
-}
