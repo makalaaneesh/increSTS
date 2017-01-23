@@ -2,3 +2,5 @@ venv/*
 ~*
 *.out
 *.pyc
+*.log
+metastore_db/
