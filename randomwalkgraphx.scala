@@ -11,6 +11,7 @@ val filename = "edgelist"
 var vertexArray = ArrayBuffer[(VertexId,(String,Int))]()
 var VertexId :Long = 1L
 var EdgeArray = ArrayBuffer[Edge[Int]]()
+var vertex1 = 0L
 var vertex2 = 0L
 // var vertexpair = Array[(String,String)]();
 for(line <- Source.fromFile(filename).getLines()){

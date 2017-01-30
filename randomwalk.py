@@ -247,7 +247,7 @@ def randomwalk(B,X,Y):
 	"""
 	#Create weight probabities:
 	A = nx.to_numpy_matrix(B)
-	print A
+	# print A
 	node_list = B.nodes()
 	hit_matrix = np.array([[0. for node1 in node_list] for node2 in node_list])
 	r_matrix = np.array([[0. for node1 in node_list] for node2 in node_list])
@@ -260,7 +260,7 @@ def randomwalk(B,X,Y):
 		if total!=0:
 			for j in range(0,len(node_list)):
 				A[i,j] = A[i,j]/total
-	print A
+	# print A
 	#Random walks algorithm
 	A_mask = np.ma.masked_where(A==0., A)
 

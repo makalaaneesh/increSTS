@@ -103,13 +103,13 @@ class Cluster:
 
 def get_comments():
 	comments = []
-	f = open("comments.txt", "r")
+	f = open("ultracleanedcomments.txt", "r")
 	x = f.read()
 	for line in x.split("\n"):
-		if ":" not in line:
-			print "ignored"
-			continue
-		line = line[line.index(":")+1:]
+		# if ":" not in line:
+		# 	print "ignored"
+		# 	continue
+		# line = line[line.index(":")+1:]
 		line = line.strip()
 		line = line.decode("utf-8")
 		line = line.encode("ascii","ignore")
@@ -223,16 +223,23 @@ if __name__ == "__main__":
 	# set of all the clusters
 	clusters = set()
 	comments = get_comments()
-	of = open("cleanedcomments.txt", "w")
+	# of = open("cleanedcomments.txt", "w")
 
 	for i, comment in enumerate(comments):
-		of.write(comment+"\n")
+		# of.write(comment+"\n")
 		increSTS(comment, clusters)
 		print i," iteration complete---------", 
 		print "{len} clusters created".format(len=len(clusters))
 
 	cl = list(clusters)
 	cl.sort(key = lambda c: len(c.comments),reverse = True)
+	f = open("clusters_rw.txt","w")
+	for i in range(0,16):
+		f.write("\n-------------"+str(i)+"---------------\n")
+		f.write("\n".join(cl[i].comments))
+		f.write("\n--------------------------------\n")
+
+	f.close()
 
 
 
