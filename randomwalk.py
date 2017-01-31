@@ -26,7 +26,7 @@ This is a script to implement random walks
 
 NGRAM = 5
 word_list = {}
-THRESHOLD_VALUE = 10
+THRESHOLD_VALUE = 6
 GRAPH_SETTING=False
 STEPS_VALUE = 5
 MAX_HITS = 4
@@ -247,7 +247,7 @@ def randomwalk(B,X,Y):
 	"""
 	#Create weight probabities:
 	A = nx.to_numpy_matrix(B)
-	print A
+	# print A
 	node_list = B.nodes()
 	hit_matrix = np.array([[0. for node1 in node_list] for node2 in node_list])
 	r_matrix = np.array([[0. for node1 in node_list] for node2 in node_list])
@@ -260,7 +260,7 @@ def randomwalk(B,X,Y):
 		if total!=0:
 			for j in range(0,len(node_list)):
 				A[i,j] = A[i,j]/total
-	print A
+	# print A
 	#Random walks algorithm
 	A_mask = np.ma.masked_where(A==0., A)
 
@@ -505,36 +505,36 @@ class RandomWalk(threading.Thread):
 			# np.ma.set_fill_value(P, 0.)
 			# P = P.filled()
 			hits = 0
-			print "STEP "+str(i)
-			print self.node_list[start_node_index]
+			# print "STEP "+str(i)
+			# print self.node_list[start_node_index]
 			while (type(self.node_list[source_node_index]) is ContextNode) or (type(self.node_list[source_node_index]) is WordNode and self.node_list[source_node_index].isNoisy) or (hits < MAX_HITS):
 				hits = hits + 1
 				row_array = P[source_node_index,None,:]
 				row_array[0,start_node_index]=0
 				source_node_index = np.argmax(row_array)
 				if row_array[0,source_node_index] == 0:
-					print "No where to go"
+					# print "No where to go"
 					break
-				print "->"
-				print self.node_list[source_node_index]
+				# print "->"
+				# print self.node_list[source_node_index]
 				# pdb.set_trace()
 				if (type(self.node_list[source_node_index]) is WordNode and not self.node_list[source_node_index].isNoisy) or (hits >= MAX_HITS):
 					break
-			print "STEP Done"
+			# print "STEP Done"
 			r_matrix[source_node_index]=r_matrix[source_node_index]+1
 			hit_matrix[source_node_index]=hits
 		H_matrix = np.true_divide(hit_matrix,r_matrix)
 		where_are_NaNs = np.isnan(H_matrix)
 		H_matrix[where_are_NaNs] = 0.
-		print "==========Final H Matrix==========="
-		print H_matrix
+		# print "==========Final H Matrix==========="
+		# print H_matrix
 		total = 0.0
 		for j in range(0,len(self.node_list)):
 			total = total + H_matrix[j]
 		if total!=0:
 			for j in range(0,len(self.node_list)):
 				H_matrix[j] = H_matrix[j]/total
-		print H_matrix
+		# print H_matrix
 		final_word_map={}
 		word_node_list = []
 
@@ -554,12 +554,12 @@ class RandomWalk(threading.Thread):
 				edit_n_m = nlp.editex("".join(OrderedDict.fromkeys(n)),"".join(OrderedDict.fromkeys(m)))
 				if edit_n_m !=0:
 					sim_cost_n_m = lcsr_n_m/edit_n_m
-					print sim_cost_n_m
+					# print sim_cost_n_m
 					cost_matrix[j] = float(H_matrix[j] + sim_cost_n_m)
 					# print "="
 					# print cost_matrix[i,j]
-		print "===========Final Cost Matrix================"
-		print cost_matrix
+		# print "===========Final Cost Matrix================"
+		# print cost_matrix
 		#Cost matrix done
 		if type(self.node_list[node_index]) is WordNode and self.node_list[node_index].isNoisy:
 			self.final_word_map[str(self.node_list[node_index])]=[]
