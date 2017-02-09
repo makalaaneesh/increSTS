@@ -1,76 +1,169 @@
-+-------------+-------------+------+
-|          src|          dst|weight|
-+-------------+-------------+------+
-| 944892805123|1331439861772|     1|
-| 601295421449|1297080123404|     1|
-|1228360646658|1125281431568|     1|
-| 523986010129| 919123001357|     1|
-|1400159338522| 498216206359|     1|
-|1005022347288| 412316860443|     1|
-| 463856467991| 472446402588|     1|
-|1451698946074|1357209665562|     1|
-| 403726925831|1185410973734|     1|
-|1228360646669|1047972020256|     1|
-| 103079215112|1477468749871|     1|
-| 103079215112|1056561954869|     1|
-| 103079215112|1202590842934|     1|
-| 687194767380| 747324309574|     1|
-|1262720385080|1606317768784|     1|
-|  51539607558|1443109011535|     1|
-| 120259084294|1073741824100|     1|
-|1039382085718|1030792151111|     1|
-|1391569403987|1709396983903|     1|
-|1245540515936|1133871366225|     1|
-+-------------+-------------+------+
++--------------------+----------------+----+
+|                  id|           value|type|
++--------------------+----------------+----+
+|b192017da47f5d35f...|       arguments| OOV|
+|d3cec99112255db9b...|             art| OOV|
+|7cab86b82e78b90e8...|          blairs| OOV|
+|2661734fb3be5851c...|          bolden| OOV|
+|aa7d592c44d593e83...|          doubts| OOV|
+|ed157486b875d92c2...|      electrical| OOV|
+|fa95e5080882f52bd...|             few|  IV|
+|a5bfbc7f7c81dc34d...|          filing| OOV|
+|554c07a8809dc2328...|          freaks| OOV|
+|a2fb8bec14fca25e8...|     handicapped| OOV|
+|99fa08493f1ce56b0...|        historys| OOV|
+|d5f346a544f51fc16...|         implore| OOV|
+|29d62f44c5cd2cd4b...|       indicator| OOV|
+|c96c6d5be8d08a12e...|           input| OOV|
+|fada47ef6037db607...|       involving| OOV|
+|6d3326b3855993b41...|        medicare| OOV|
+|f6fc84c9f21c24907...|          online| OOV|
+|f5a1971c2ef02a5ab...|           oscar| OOV|
+|aef15106b12cda83f...|        parishes| OOV|
+|1e0125772f4ab33ac...|        randomly| OOV|
+|f8dcb7a13bf4991a7...|     requirement| OOV|
+|533e0b642db39ff10...|         reviled| OOV|
+|a6b46dd0d1ae5e86c...|            some|  IV|
+|0b21aaddae93d0233...|       standards| OOV|
+|94e8566ddfc123edf...|           still|  IV|
+|1ce2c02f7ff6469e3...|           surez| OOV|
+|6120d7ff00ac60e0b...|           those|  IV|
+|a566628ce5e5ec28f...|          tonnes| OOV|
+|1b0d313d1f0287b59...|             17m| OOV|
+|27648bbe98f14b9d6...|        beverage| OOV|
+|f88bf6b57df184668...|       beverages| OOV|
+|dacbf2e601fd0e8e3...|          blasts| OOV|
+|daad3b4477b005f6e...|     brilliantly| OOV|
+|8b34dbc2c05eb4d7e...|    conversation| OOV|
+|3f876bf23981a0ee2...|        defeated| OOV|
+|5417019e20f54bf7b...|        drinkers| OOV|
+|ca9626dfa1b13e7e2...|     enhancement| OOV|
+|8be1d922d09bab08a...|      fraternity| OOV|
+|4d8fa801a136f34fc...|         highest| OOV|
+|c0cbff04cc90f5b4c...|         include| OOV|
+|abfc412ce6e530df6...|          launch| OOV|
+|93c68148f4acfe0d7...|           often|  IV|
+|9bf5a24e4aa779981...|       operation| OOV|
+|4b56ea8eae2d74b90...|       partially| OOV|
+|afa6e9ab3ac6574d5...|        positive| OOV|
+|60c394d0e76874873...|      productive| OOV|
+|7cfd9315f100ce505...|           qaeda| OOV|
+|318c5ad51e9b36ff5...|        received| OOV|
+|6e5d6c4e07e326e00...|        slightly| OOV|
+|1562206543da76412...|           staff| OOV|
+|f9e9ed016bc00df3a...|         styrene| OOV|
+|c2a5ac3a8c0223f31...|          taking|  IV|
+|a031eda273ac18861...|      television| OOV|
+|925a391b4af38b32a...|      variations| OOV|
+|96a6b83f147c7d8b9...|           vocal| OOV|
+|ba0f95091e1972ccc...|          worked| OOV|
+|1c6b6b9e01275af3a...|         achieve| OOV|
+|c585f1decb986f7ff...|       australia| OOV|
+|7d6e18d0ff4bed3b1...|           cable| OOV|
+|779d1ba1900f81e1e...|             cia| OOV|
+|b3a1984ba0b1d8ad7...|            coin| OOV|
+|8dc717aadf2453897...|       directors| OOV|
+|6af308d5ad701d4b9...|        disaster| OOV|
+|1f7e46957e055014c...|       dispersal| OOV|
+|a6747a6bee7c5008e...|        doctrine| OOV|
+|e6cffac9b45b6a567...|          dorset| OOV|
+|e5be6b2fc69cf45db...|           gente| OOV|
+|19c64195eb8f22c39...|          growth| OOV|
+|df46219531cb5d522...|           harry| OOV|
+|659ec816213ba0ce1...|          heated| OOV|
+|ceae92584cb684bd6...|             itv| OOV|
+|720df737b3aa75132...|      kilmarnock| OOV|
+|bbb7e4fdad15d6f05...|            lent| OOV|
+|26dfb8a3d19be71c7...|           marat| OOV|
+|2554d1918fbc9ddaa...|           paddy| OOV|
+|87f11486d9ad74794...|          parado| OOV|
+|c422f1232f72ac34d...|          pedals| OOV|
+|372c4c0ebb86f6ad3...|    policymaking| OOV|
+|afdc4728c3be2eb56...|          posing| OOV|
+|5a8333ce9f0bc54ff...|       shielding| OOV|
+|402b5d6922feaf99c...|         storeys| OOV|
+|709cd5d04df01a79a...|      surrounded| OOV|
+|baed831623943be39...|           watch| OOV|
+|3d303171e2763bc5e...|            10th| OOV|
+|c2ccf0d1c95eb0a0d...|           1of14| OOV|
+|031b4af5197ec30a9...|              51| OOV|
+|2bdae7e96a68f09f2...|     70magnitude| OOV|
+|35bf75021158f4232...|      accusation| OOV|
+|4bcef3de76eaf574c...|       character| OOV|
+|ecbf62ce4a28912cb...|       conectado| OOV|
+|e45d4cbade71ec65c...|       countries| OOV|
+|bb4ad70714e56e019...|          duties| OOV|
+|dbd3a49d0d906b4ed...|              en|  IV|
+|26f1de33979d065ba...|       extension| OOV|
+|4d0283ef14e4c0a2b...|  fastestgrowing| OOV|
+|d0607f7ad2628b2af...|            film| OOV|
+|846d124b6785689c7...|         flowers| OOV|
+|e44566d97bb27a9b3...|higherresolution| OOV|
+|e6d7ddd8f414a22d8...|          intact| OOV|
+|f9e2aa11cee73d393...|       intricate| OOV|
++--------------------+----------------+----+
+only showing top 100 rows
+
+no of rows are  21875
++--------------------+--------------------+------+
+|                 src|                 dst|weight|
++--------------------+--------------------+------+
+|b9776d7ddf459c9ad...|e6f11b1d0ac19191f...|     1|
+|10c22bcf4c768b515...|9265c4bab3f33401b...|     1|
+|a495e837faa6ef836...|4db3c7cf9fd586795...|     1|
+|12765295db4f1e791...|f290d334de945eb74...|     1|
+|11d1ff4edd5340719...|953591b4ffcf5dc4f...|     1|
+|254bb97b57f12e160...|bcbbd21544ba104b8...|     1|
+|2ad0acb649d2c730c...|f4bd671473b22daad...|     1|
+|683a62ce15fbabb1a...|6f057af8f7ce67b4a...|     1|
+|ed55a251d2259c156...|d9462d5b33bcd9cf5...|     1|
+|ca978112ca1bbdcaf...|dc092c6bbb2a7c781...|     1|
+|663ea1bfffe5038f3...|181d2ee497c1f3f81...|     1|
+|a6b46dd0d1ae5e86c...|1a436ac96ac511dd5...|     1|
+|a94e7bcfcbed3c846...|f072073bce288a219...|     1|
+|2ad8a7049d7c5511a...|1329c30132a27e542...|     1|
+|5879a0f59f728fdfc...|1f9a7b1f6be9ab052...|     1|
+|9390298f3fb0c5b16...|e996c3cd967a23d8d...|     1|
+|1b3d1caa3417d856b...|708f4e417633f43e5...|     1|
+|d6a7cd2a7371b1a15...|ef115bd3bcd769f10...|     1|
+|46599c5bb5c33101f...|7aca75d078d77cd13...|     1|
+|ae6c79d10f1fd4106...|1e387e3c9ba1d19f6...|     1|
++--------------------+--------------------+------+
 only showing top 20 rows
 
-+--------------------+-------+---+
-|               value|   type| id|
-+--------------------+-------+---+
-|['included', 'a',...|context|  0|
-|          landslides|     IV|  1|
-|['murphys', 'care...|context|  2|
-|['and', 'ashley',...|context|  3|
-|['would', 'make',...|context|  4|
-|               evans|     IV|  5|
-|['no', 'sort', '*...|context|  6|
-|['and', 'soon', '...|context|  7|
-|               spray|     IV|  8|
-|              spring|     IV|  9|
-|                 gas|    OOV| 10|
-|               lands|     IV| 11|
-|['be', 'a', '*', ...|context| 12|
-|['driver', 'still...|context| 13|
-|             periods|     IV| 14|
-|['the', 'phone', ...|context| 15|
-|               timed|     IV| 16|
-|               elbow|     IV| 17|
-|['elbow', 'in', '...|context| 18|
-|              lining|     IV| 19|
-+--------------------+-------+---+
++--------------------+--------------------+------------+
+|                  id|               value|type_initial|
++--------------------+--------------------+------------+
+|582967534d0f909d1...|                  in|        word|
+|c9b77f894db9e8376...|['the', 'sea', '*...|     context|
+|429fb815bdfaee672...|['much', 'of', '*...|     context|
+|d05e1c7d1232d0a5f...|['an', 'announcem...|     context|
+|486ea46224d1bb4fb...|               world|        word|
+|8e7ce76b88cc45a23...|             extends|        word|
+|394e3adb0572ad71b...|          relaxation|        word|
+|cd1bb3012bcfaa0c5...|                know|        word|
+|46c7e618371458094...|           balaclava|        word|
+|472a02b112c4ec5a6...|['an', 'outline',...|     context|
+|0f4b28ff59aa3dfa6...|['were', 'part', ...|     context|
+|e272deecde720ffc7...|                cold|        word|
+|fdcad459f3f3083f4...|['through', 'with...|     context|
+|6e317bcd6839e8877...|               books|        word|
+|d90ee9ccf6bea1d29...|                drop|        word|
+|9b3a7f7e86df5759f...|['ask', 'question...|     context|
+|cae1afc1235b4cfbb...|              parade|        word|
+|b3032b1cd02a6c0da...|['like', 'the', '...|     context|
+|054730ec82b82ad87...|['obviously', 'i'...|     context|
+|3ab9032f4410c1df2...|['point', 'to', '...|     context|
++--------------------+--------------------+------------+
 only showing top 20 rows
 
-+-------------+--------+
-|           id|inDegree|
-+-------------+--------+
-|1005022347281|       2|
-|  34359738414|       2|
-| 584115552350|       2|
-|1683627180112|       2|
-| 489626271839|       2|
-| 884763263015|       2|
-| 970662608896|       2|
-|1116691496986|       2|
-| 515396075535|       2|
-| 120259084305|       2|
-| 472446402609|       2|
-|1056561954832|       2|
-| 927712936002|       2|
-| 747324309565|       2|
-| 369367187464|       2|
-| 300647710833|       2|
-|1365799600162|       2|
-|1116691497020|       2|
-+-------------+--------+
+no of rows are  21875
++--------+-----+
+|inDegree|count|
++--------+-----+
+|       1|16678|
+|       4|    1|
+|       2|   18|
++--------+-----+
 
-18
+16697
