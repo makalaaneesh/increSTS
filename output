@@ -108,26 +108,26 @@ no of rows are  21875
 +--------------------+--------------------+------+
 |                 src|                 dst|weight|
 +--------------------+--------------------+------+
-|b9776d7ddf459c9ad...|e6f11b1d0ac19191f...|     1|
-|10c22bcf4c768b515...|9265c4bab3f33401b...|     1|
-|a495e837faa6ef836...|4db3c7cf9fd586795...|     1|
-|12765295db4f1e791...|f290d334de945eb74...|     1|
-|11d1ff4edd5340719...|953591b4ffcf5dc4f...|     1|
-|254bb97b57f12e160...|bcbbd21544ba104b8...|     1|
-|2ad0acb649d2c730c...|f4bd671473b22daad...|     1|
-|683a62ce15fbabb1a...|6f057af8f7ce67b4a...|     1|
-|ed55a251d2259c156...|d9462d5b33bcd9cf5...|     1|
-|ca978112ca1bbdcaf...|dc092c6bbb2a7c781...|     1|
-|663ea1bfffe5038f3...|181d2ee497c1f3f81...|     1|
-|a6b46dd0d1ae5e86c...|1a436ac96ac511dd5...|     1|
-|a94e7bcfcbed3c846...|f072073bce288a219...|     1|
-|2ad8a7049d7c5511a...|1329c30132a27e542...|     1|
-|5879a0f59f728fdfc...|1f9a7b1f6be9ab052...|     1|
-|9390298f3fb0c5b16...|e996c3cd967a23d8d...|     1|
-|1b3d1caa3417d856b...|708f4e417633f43e5...|     1|
-|d6a7cd2a7371b1a15...|ef115bd3bcd769f10...|     1|
-|46599c5bb5c33101f...|7aca75d078d77cd13...|     1|
-|ae6c79d10f1fd4106...|1e387e3c9ba1d19f6...|     1|
+|8e7fc0236af43df93...|451a6c68c020d009a...|     1|
+|4945a70fa7f9c13fe...|f88939968c8bdf8c1...|     1|
+|8b5b9db0c13db2425...|1ca69fb6571da80ea...|     1|
+|56681010b753e1abe...|85bdd7efd446b792d...|     1|
+|c9b5fcdd10039e800...|b66fb4bfd276e1814...|     1|
+|762069bc07a6e1b5d...|9f3b60e374a3ddd78...|     1|
+|b5f90a96e680140d5...|3d12df3c58a2df40c...|     1|
+|400464e9e99bb03f0...|05491909b86537f0a...|     1|
+|5b729e0f619797fd6...|6262c2e51734fe52b...|     1|
+|286d4726e10586b59...|db7d35b24b165c0ec...|     1|
+|ad7fbdd96e2166ace...|0e2ae84b87bfff0e3...|     1|
+|c54a061dfcc125cb1...|7f2fc1853e0eaf7b0...|     1|
+|80688fc3d5f88a069...|e8aabf908ce2818f7...|     1|
+|a7e2d26e8d15814dd...|2be16c5039cc34ae5...|     1|
+|1cac4d101ee696fd7...|6a7bb399de4547ea9...|     1|
+|582967534d0f909d1...|12967af8e0c657155...|     1|
+|f74efabef12ea619e...|aa62c8c787f6c3e8f...|     1|
+|9513229d435978263...|d759eccce08bc96a6...|     1|
+|08996f19af92547a1...|c62de43d71eb53e6f...|     1|
+|e4d693d24e646cb78...|b457c58259fd89b2b...|     1|
 +--------------------+--------------------+------+
 only showing top 20 rows
 
@@ -135,25 +135,25 @@ only showing top 20 rows
 |                  id|               value|type_initial|
 +--------------------+--------------------+------------+
 |582967534d0f909d1...|                  in|        word|
-|c9b77f894db9e8376...|['the', 'sea', '*...|     context|
-|429fb815bdfaee672...|['much', 'of', '*...|     context|
-|d05e1c7d1232d0a5f...|['an', 'announcem...|     context|
 |486ea46224d1bb4fb...|               world|        word|
 |8e7ce76b88cc45a23...|             extends|        word|
+|9678937cb2a0316e3...|of leeds * seem like|     context|
 |394e3adb0572ad71b...|          relaxation|        word|
 |cd1bb3012bcfaa0c5...|                know|        word|
 |46c7e618371458094...|           balaclava|        word|
-|472a02b112c4ec5a6...|['an', 'outline',...|     context|
-|0f4b28ff59aa3dfa6...|['were', 'part', ...|     context|
+|97afaaf141802a83c...|long sleeved * an...|     context|
+|6ac2b92e8c851feec...|hearts club * soo...|     context|
+|bf4a21d2bda872994...|down for * reason...|     context|
+|d732ba6fe111240d3...|slightly bizarre ...|     context|
 |e272deecde720ffc7...|                cold|        word|
-|fdcad459f3f3083f4...|['through', 'with...|     context|
+|d224cb6547b49e5c4...|set of * cammells...|     context|
+|05f5d06f5c5f013e5...|design challenge ...|     context|
+|57cb64c1e20d0ac7d...|designers confere...|     context|
 |6e317bcd6839e8877...|               books|        word|
 |d90ee9ccf6bea1d29...|                drop|        word|
-|9b3a7f7e86df5759f...|['ask', 'question...|     context|
 |cae1afc1235b4cfbb...|              parade|        word|
-|b3032b1cd02a6c0da...|['like', 'the', '...|     context|
-|054730ec82b82ad87...|['obviously', 'i'...|     context|
-|3ab9032f4410c1df2...|['point', 'to', '...|     context|
+|96a417aa5f0afc227...|   with his * in the|     context|
+|e3a29c3ac2f86b661...|of which * alread...|     context|
 +--------------------+--------------------+------------+
 only showing top 20 rows
 
