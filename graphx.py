@@ -1,7 +1,9 @@
 """
-spark-submit --packages graphframes:graphframes:0.2.0-spark2.0-s_2.11 graphx.py filename > output
+spark-submit --packages graphframes:graphframes:0.2.0-spark2.0-s_2.11 graphx.py clean.txt mixed.txt > output
 
-
+clean, noisy corpuses
+clean to keep counts of words in order to decide OOV or IV based on threshold.
+mixed - clean+noisy to form bipartite graph on which random walks are performed
 
 """
 from pyspark import SparkContext
@@ -12,7 +14,10 @@ from pyspark.sql.types import *
 import sys
 import hashlib
 from operator import add
+import nlp
 
+
+NGRAM = 5
 THRESHOLD_COUNT = 6
 WORD_TYPES = ["OOV","IV"]
 sc = SparkContext()
@@ -51,7 +56,25 @@ def parseedges(r):
 	return final_list
 
 
-edge_list_file = sqlContext.read.text("edgelist").rdd.map(lambda r: r[0])
+def create_edge_list(line):
+	edgelist = []
+	line = line.strip()
+	# line = line.decode("utf-8")
+	line = line.encode('ascii','ignore')
+	line = nlp.clean(line)
+	ngramlist = nlp.extract_ngrams(line,NGRAM)
+	for ngram in ngramlist:
+		ngram = list(ngram)
+		index = NGRAM/2
+		word = ngram[index]
+		ngram[index] = "*"
+		edgelist.append(word + "|" + " ".join(ngram))
+	return edgelist
+
+
+
+mixed_input = sqlContext.read.text(sys.argv[2]).rdd.map(lambda r: r[0])
+edge_list_file = mixed_input.flatMap(lambda r: create_edge_list(r))
 vertices = edge_list_file.flatMap(lambda r: parsevertices(r)) # returns an RDD list of (id, vertex, type) by spitting the input line
 
 vertices_df = sqlContext.createDataFrame(vertices,["id","value", "type_initial"]).dropDuplicates()
