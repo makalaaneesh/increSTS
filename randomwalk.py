@@ -99,8 +99,8 @@ def getallngrams():
 	"""
 	Getting all the ngrams
 	"""
-	f = open("mixedcorpus.txt", "r")
-	# f = open("commentstest.txt", "r")
+	# f = open("mixedcorpus.txt", "r")
+	f = open("commentstest.txt", "r")
 	x = f.read()
 	ngrams_list=[]
 	for line in x.split("\n"):

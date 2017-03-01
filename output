@@ -7,7 +7,7 @@
 |2661734fb3be5851c...|          bolden| OOV|
 |aa7d592c44d593e83...|          doubts| OOV|
 |ed157486b875d92c2...|      electrical| OOV|
-|fa95e5080882f52bd...|             few|  IV|
+|fa95e5080882f52bd...|             few| OOV|
 |a5bfbc7f7c81dc34d...|          filing| OOV|
 |554c07a8809dc2328...|          freaks| OOV|
 |a2fb8bec14fca25e8...|     handicapped| OOV|
@@ -23,11 +23,11 @@
 |1e0125772f4ab33ac...|        randomly| OOV|
 |f8dcb7a13bf4991a7...|     requirement| OOV|
 |533e0b642db39ff10...|         reviled| OOV|
-|a6b46dd0d1ae5e86c...|            some|  IV|
+|a6b46dd0d1ae5e86c...|            some| OOV|
 |0b21aaddae93d0233...|       standards| OOV|
-|94e8566ddfc123edf...|           still|  IV|
+|94e8566ddfc123edf...|           still| OOV|
 |1ce2c02f7ff6469e3...|           surez| OOV|
-|6120d7ff00ac60e0b...|           those|  IV|
+|6120d7ff00ac60e0b...|           those| OOV|
 |a566628ce5e5ec28f...|          tonnes| OOV|
 |1b0d313d1f0287b59...|             17m| OOV|
 |27648bbe98f14b9d6...|        beverage| OOV|
@@ -42,7 +42,7 @@
 |4d8fa801a136f34fc...|         highest| OOV|
 |c0cbff04cc90f5b4c...|         include| OOV|
 |abfc412ce6e530df6...|          launch| OOV|
-|93c68148f4acfe0d7...|           often|  IV|
+|93c68148f4acfe0d7...|           often| OOV|
 |9bf5a24e4aa779981...|       operation| OOV|
 |4b56ea8eae2d74b90...|       partially| OOV|
 |afa6e9ab3ac6574d5...|        positive| OOV|
@@ -52,7 +52,7 @@
 |6e5d6c4e07e326e00...|        slightly| OOV|
 |1562206543da76412...|           staff| OOV|
 |f9e9ed016bc00df3a...|         styrene| OOV|
-|c2a5ac3a8c0223f31...|          taking|  IV|
+|c2a5ac3a8c0223f31...|          taking| OOV|
 |a031eda273ac18861...|      television| OOV|
 |925a391b4af38b32a...|      variations| OOV|
 |96a6b83f147c7d8b9...|           vocal| OOV|
@@ -93,7 +93,7 @@
 |ecbf62ce4a28912cb...|       conectado| OOV|
 |e45d4cbade71ec65c...|       countries| OOV|
 |bb4ad70714e56e019...|          duties| OOV|
-|dbd3a49d0d906b4ed...|              en|  IV|
+|dbd3a49d0d906b4ed...|              en| OOV|
 |26f1de33979d065ba...|       extension| OOV|
 |4d0283ef14e4c0a2b...|  fastestgrowing| OOV|
 |d0607f7ad2628b2af...|            film| OOV|
@@ -167,3 +167,55 @@ no of rows are  21875
 +--------+-----+
 
 16697
++--------------------+-------------------+
+|                  id|           pagerank|
++--------------------+-------------------+
+|2c624232cdd221771...|               0.15|
+|4dea5c7cb70f50322...|               0.15|
+|09a2f93dfb40f30e0...|             0.1517|
+|c99d4995981f34f88...|0.27749999999999997|
+|e73d78342d2836bdc...|           0.181875|
+|3ac6de7309a7d7008...|0.27749999999999997|
+|6a187ec05f50ab719...|0.15554347826086956|
+|3ce101acca5fc2f7d...|0.27749999999999997|
+|f05c99eec91b5dd8f...|0.15013492063492062|
+|5aaffbe84fc843f3d...|0.27749999999999997|
+|d27a04b9d752fd73b...|           0.181875|
+|dc207a151550ee183...|0.15179577464788732|
+|e9b8842e4f23c7efa...|             0.1925|
+|0d747fbd5da466874...|0.27749999999999997|
+|67ef99b09f9e0bc99...|0.15028977272727273|
+|e11ba185cb619be4f...|0.15028977272727273|
+|8a857b59e344a7d56...|           0.160625|
+|6b2552a58597fd0a2...|            0.21375|
+|28009121109c196e3...|0.27749999999999997|
+|a07eaab3c35bdbf42...|0.27749999999999997|
++--------------------+-------------------+
+only showing top 20 rows
+
++--------------------+--------------------+--------+
+|                  id|               value|pagerank|
++--------------------+--------------------+--------+
+|2bdae7e96a68f09f2...|         70magnitude|    0.15|
+|90e55f332294726de...|['a', 'massive', ...|  0.1275|
+|b37b53dc72564ad53...|['a', 'clod', '*'...|     0.0|
+|3fb6b583a9f63ae21...|['about', 'the', ...|     0.0|
+|72d1b5da6eeaf1789...|                2011|     0.0|
+|8865f110bd2342e67...|['and', 'hearty',...|     0.0|
+|7630054c363d16e87...|['a', 'time', '*'...|     0.0|
+|28c7996e118ac5073...|['about', 'her', ...|     0.0|
+|afebf6666b57adf66...|['a', 'dozen', '*...|     0.0|
+|3f1b44c31baa1338a...|['david', 'miliba...|     0.0|
+|759ac20d1a0a00887...|['an', 'energy', ...|     0.0|
+|8397e35b358d57045...|['be', 'respectfu...|     0.0|
+|41964b8ea37f40d79...|['anniversary', '...|     0.0|
+|d680a2efed84e377e...|['accident', 'and...|     0.0|
+|b2b889e8500642adc...|['be', 'thats', '...|     0.0|
+|c8d21535177959c34...|['baby', 'killer'...|     0.0|
+|120807cbb7115e04b...|['big', 'buck', '...|     0.0|
+|346fdb332f03f40b4...|['chief', 'says',...|     0.0|
+|125067e39a342ee63...|['despite', 'sink...|     0.0|
+|ba7775f2185033fb3...|['became', 'the',...|     0.0|
++--------------------+--------------------+--------+
+only showing top 20 rows
+

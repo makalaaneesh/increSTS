@@ -6,7 +6,7 @@ spark-submit --packages graphframes:graphframes:0.2.0-spark2.0-s_2.11 graphx.py 
 """
 from pyspark import SparkContext
 from pyspark.sql import *
-from pyspark.sql.functions import monotonically_increasing_id
+from pyspark.sql.functions import *
 from pyspark.sql.functions import udf, col
 from pyspark.sql.types import *
 import sys
@@ -97,6 +97,20 @@ g1 = g.inDegrees
 g1.groupBy("inDegree").count().show()
 print g1.count()
 
+#Page
+results = g.pageRank(resetProbability=0.15, tol=0.01)
+# Display resulting pageranks and final edge weights
+# Note that the displayed pagerank may be truncated, e.g., missing the E notation.
+# In Spark 1.5+, you can use show(truncate=False) to avoid truncation.
+results.vertices.select("id", "pagerank").show()
+# results.edges.select("src", "dst", "weight").show()
+
+# Run PageRank for a fixed number of iterations.
+results3 = g.pageRank(resetProbability=0.15, maxIter=10, sourceId=hashed('70magnitude'))
+results3.vertices.select("id","value","pagerank").orderBy(desc("pagerank")).show()
+
+
+# Run PageRank personalized for vertex "a"
 
 # filtered = vertices_df.rdd.filter(lambda x: x["value"] == "on").collect()
 # print filtered
