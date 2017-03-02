@@ -103,10 +103,10 @@ def getlcscost(n,m):
 
 
 def get_pagerank(v,n):
-	r = g.pageRank(resetProbability=0.15, maxIter=10, sourceId=v)
-	c = r.vertices.filter(r.vertices.type == 'IV').orderBy(desc("pagerank"))
-	d = c.rdd.map(lambda x:{x.value: (x.pagerank + getlcscost(n,x.value))})
-	print d.collect()
+	r = g.pageRank(resetProbability=0.0, maxIter=5, sourceId=v)
+	c = r.vertices.filter(r.vertices.type == 'IV')
+	d = c.rdd.map(lambda x:(x.value, (x.pagerank + getlcscost(n,x.value)))).top(2,key = lambda x: x[1])
+	print d
 
 
 counts_df = sqlContext.createDataFrame(countsrdd, ["value", "count"])
@@ -140,16 +140,19 @@ g1.groupBy("inDegree").count().show()
 print g1.count()
 
 #Page
-results = g.pageRank(resetProbability=0.15, tol=0.01)
+# results = g.pageRank(resetProbability=0.15, maxIter=5)
 # Display resulting pageranks and final edge weights
 # Note that the displayed pagerank may be truncated, e.g., missing the E notation.
 # In Spark 1.5+, you can use show(truncate=False) to avoid truncation.
-results.vertices.select("id", "pagerank").show()
+# results.vertices.select("id", "pagerank").show()
 # results.edges.select("src", "dst", "weight").show()
+
+
 OOV_vertices = g.vertices.filter(g.vertices.type == 'OOV').collect()
 for vertex in OOV_vertices:
 	print vertex.value
 	get_pagerank(vertex.id,vertex.value)
+
 # Run PageRank for a fixed number of iterations.
 # results3 = g.pageRank(resetProbability=0.15, maxIter=10, sourceId=hashed('70magnitude'))
 # results3.vertices.select("id","value","pagerank").orderBy(desc("pagerank")).show()
