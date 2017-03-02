@@ -1,221 +1,128 @@
-+--------------------+----------------+----+
-|                  id|           value|type|
-+--------------------+----------------+----+
-|b192017da47f5d35f...|       arguments| OOV|
-|d3cec99112255db9b...|             art| OOV|
-|7cab86b82e78b90e8...|          blairs| OOV|
-|2661734fb3be5851c...|          bolden| OOV|
-|aa7d592c44d593e83...|          doubts| OOV|
-|ed157486b875d92c2...|      electrical| OOV|
-|fa95e5080882f52bd...|             few| OOV|
-|a5bfbc7f7c81dc34d...|          filing| OOV|
-|554c07a8809dc2328...|          freaks| OOV|
-|a2fb8bec14fca25e8...|     handicapped| OOV|
-|99fa08493f1ce56b0...|        historys| OOV|
-|d5f346a544f51fc16...|         implore| OOV|
-|29d62f44c5cd2cd4b...|       indicator| OOV|
-|c96c6d5be8d08a12e...|           input| OOV|
-|fada47ef6037db607...|       involving| OOV|
-|6d3326b3855993b41...|        medicare| OOV|
-|f6fc84c9f21c24907...|          online| OOV|
-|f5a1971c2ef02a5ab...|           oscar| OOV|
-|aef15106b12cda83f...|        parishes| OOV|
-|1e0125772f4ab33ac...|        randomly| OOV|
-|f8dcb7a13bf4991a7...|     requirement| OOV|
-|533e0b642db39ff10...|         reviled| OOV|
-|a6b46dd0d1ae5e86c...|            some| OOV|
-|0b21aaddae93d0233...|       standards| OOV|
-|94e8566ddfc123edf...|           still| OOV|
-|1ce2c02f7ff6469e3...|           surez| OOV|
-|6120d7ff00ac60e0b...|           those| OOV|
-|a566628ce5e5ec28f...|          tonnes| OOV|
-|1b0d313d1f0287b59...|             17m| OOV|
-|27648bbe98f14b9d6...|        beverage| OOV|
-|f88bf6b57df184668...|       beverages| OOV|
-|dacbf2e601fd0e8e3...|          blasts| OOV|
-|daad3b4477b005f6e...|     brilliantly| OOV|
-|8b34dbc2c05eb4d7e...|    conversation| OOV|
-|3f876bf23981a0ee2...|        defeated| OOV|
-|5417019e20f54bf7b...|        drinkers| OOV|
-|ca9626dfa1b13e7e2...|     enhancement| OOV|
-|8be1d922d09bab08a...|      fraternity| OOV|
-|4d8fa801a136f34fc...|         highest| OOV|
-|c0cbff04cc90f5b4c...|         include| OOV|
-|abfc412ce6e530df6...|          launch| OOV|
-|93c68148f4acfe0d7...|           often| OOV|
-|9bf5a24e4aa779981...|       operation| OOV|
-|4b56ea8eae2d74b90...|       partially| OOV|
-|afa6e9ab3ac6574d5...|        positive| OOV|
-|60c394d0e76874873...|      productive| OOV|
-|7cfd9315f100ce505...|           qaeda| OOV|
-|318c5ad51e9b36ff5...|        received| OOV|
-|6e5d6c4e07e326e00...|        slightly| OOV|
-|1562206543da76412...|           staff| OOV|
-|f9e9ed016bc00df3a...|         styrene| OOV|
-|c2a5ac3a8c0223f31...|          taking| OOV|
-|a031eda273ac18861...|      television| OOV|
-|925a391b4af38b32a...|      variations| OOV|
-|96a6b83f147c7d8b9...|           vocal| OOV|
-|ba0f95091e1972ccc...|          worked| OOV|
-|1c6b6b9e01275af3a...|         achieve| OOV|
-|c585f1decb986f7ff...|       australia| OOV|
-|7d6e18d0ff4bed3b1...|           cable| OOV|
-|779d1ba1900f81e1e...|             cia| OOV|
-|b3a1984ba0b1d8ad7...|            coin| OOV|
-|8dc717aadf2453897...|       directors| OOV|
-|6af308d5ad701d4b9...|        disaster| OOV|
-|1f7e46957e055014c...|       dispersal| OOV|
-|a6747a6bee7c5008e...|        doctrine| OOV|
-|e6cffac9b45b6a567...|          dorset| OOV|
-|e5be6b2fc69cf45db...|           gente| OOV|
-|19c64195eb8f22c39...|          growth| OOV|
-|df46219531cb5d522...|           harry| OOV|
-|659ec816213ba0ce1...|          heated| OOV|
-|ceae92584cb684bd6...|             itv| OOV|
-|720df737b3aa75132...|      kilmarnock| OOV|
-|bbb7e4fdad15d6f05...|            lent| OOV|
-|26dfb8a3d19be71c7...|           marat| OOV|
-|2554d1918fbc9ddaa...|           paddy| OOV|
-|87f11486d9ad74794...|          parado| OOV|
-|c422f1232f72ac34d...|          pedals| OOV|
-|372c4c0ebb86f6ad3...|    policymaking| OOV|
-|afdc4728c3be2eb56...|          posing| OOV|
-|5a8333ce9f0bc54ff...|       shielding| OOV|
-|402b5d6922feaf99c...|         storeys| OOV|
-|709cd5d04df01a79a...|      surrounded| OOV|
-|baed831623943be39...|           watch| OOV|
-|3d303171e2763bc5e...|            10th| OOV|
-|c2ccf0d1c95eb0a0d...|           1of14| OOV|
-|031b4af5197ec30a9...|              51| OOV|
-|2bdae7e96a68f09f2...|     70magnitude| OOV|
-|35bf75021158f4232...|      accusation| OOV|
-|4bcef3de76eaf574c...|       character| OOV|
-|ecbf62ce4a28912cb...|       conectado| OOV|
-|e45d4cbade71ec65c...|       countries| OOV|
-|bb4ad70714e56e019...|          duties| OOV|
-|dbd3a49d0d906b4ed...|              en| OOV|
-|26f1de33979d065ba...|       extension| OOV|
-|4d0283ef14e4c0a2b...|  fastestgrowing| OOV|
-|d0607f7ad2628b2af...|            film| OOV|
-|846d124b6785689c7...|         flowers| OOV|
-|e44566d97bb27a9b3...|higherresolution| OOV|
-|e6d7ddd8f414a22d8...|          intact| OOV|
-|f9e2aa11cee73d393...|       intricate| OOV|
-+--------------------+----------------+----+
-only showing top 100 rows
++--------------------+-----+----+
+|                  id|value|type|
++--------------------+-----+----+
+|a3da73976501812cd...|vivek|  IV|
+|82a3537ff0dbce7ee...| name| OOV|
+|45f3549b877d5460f...| idss| OOV|
+|bb0347a468d97e98a...|  you| OOV|
+|1533ecf4d0885b408...|issss| OOV|
+|59e750a42656cebfc...| youu| OOV|
+|f029e50fcd09f511f...|  iss| OOV|
+|fa51fd49abf67705d...|   is| OOV|
+|bb6f68a6e1187b221...|naame| OOV|
+|96d9632f363564cc3...| john| OOV|
+|749ab2c0d06c42ae3...| what|  IV|
+|ac0b52a2ae6ef9999...|   do|  IV|
+|be27932ed0adb86f0...| yoou| OOV|
++--------------------+-----+----+
 
-no of rows are  21875
+no of rows are  29
 +--------------------+--------------------+------+
 |                 src|                 dst|weight|
 +--------------------+--------------------+------+
-|8e7fc0236af43df93...|451a6c68c020d009a...|     1|
-|4945a70fa7f9c13fe...|f88939968c8bdf8c1...|     1|
-|8b5b9db0c13db2425...|1ca69fb6571da80ea...|     1|
-|56681010b753e1abe...|85bdd7efd446b792d...|     1|
-|c9b5fcdd10039e800...|b66fb4bfd276e1814...|     1|
-|762069bc07a6e1b5d...|9f3b60e374a3ddd78...|     1|
-|b5f90a96e680140d5...|3d12df3c58a2df40c...|     1|
-|400464e9e99bb03f0...|05491909b86537f0a...|     1|
-|5b729e0f619797fd6...|6262c2e51734fe52b...|     1|
-|286d4726e10586b59...|db7d35b24b165c0ec...|     1|
-|ad7fbdd96e2166ace...|0e2ae84b87bfff0e3...|     1|
-|c54a061dfcc125cb1...|7f2fc1853e0eaf7b0...|     1|
-|80688fc3d5f88a069...|e8aabf908ce2818f7...|     1|
-|a7e2d26e8d15814dd...|2be16c5039cc34ae5...|     1|
-|1cac4d101ee696fd7...|6a7bb399de4547ea9...|     1|
-|582967534d0f909d1...|12967af8e0c657155...|     1|
-|f74efabef12ea619e...|aa62c8c787f6c3e8f...|     1|
-|9513229d435978263...|d759eccce08bc96a6...|     1|
-|08996f19af92547a1...|c62de43d71eb53e6f...|     1|
-|e4d693d24e646cb78...|b457c58259fd89b2b...|     1|
+|1b4df9a5b02c31564...|82a3537ff0dbce7ee...|     1|
+|96d9632f363564cc3...|bd1fd9ffb5ecaa7df...|     1|
+|59e750a42656cebfc...|d60a775b4f45d85d9...|     4|
+|d60a775b4f45d85d9...|be27932ed0adb86f0...|     1|
+|4a94bd1dab161af87...|45f3549b877d5460f...|     1|
+|507b5423aac395928...|749ab2c0d06c42ae3...|     1|
+|56a0b20e83011dee7...|fa51fd49abf67705d...|     1|
+|cb3c73563a403389b...|ac0b52a2ae6ef9999...|     4|
+|f029e50fcd09f511f...|56a0b20e83011dee7...|     1|
+|15eb01de60a1f98fb...|fa51fd49abf67705d...|     1|
+|a3da73976501812cd...|aa19eeaed5564f897...|     4|
+|774c4f7a44e4c5572...|ac0b52a2ae6ef9999...|     1|
+|a3da73976501812cd...|9169474b0ce3135dc...|     1|
+|bb0347a468d97e98a...|d60a775b4f45d85d9...|     1|
+|749ab2c0d06c42ae3...|507b5423aac395928...|     1|
+|bd1fd9ffb5ecaa7df...|a3da73976501812cd...|     1|
+|56a0b20e83011dee7...|f029e50fcd09f511f...|     1|
+|be27932ed0adb86f0...|d60a775b4f45d85d9...|     1|
+|ac0b52a2ae6ef9999...|774c4f7a44e4c5572...|     1|
+|82a3537ff0dbce7ee...|1b4df9a5b02c31564...|     1|
 +--------------------+--------------------+------+
 only showing top 20 rows
 
-+--------------------+--------------------+------------+
-|                  id|               value|type_initial|
-+--------------------+--------------------+------------+
-|582967534d0f909d1...|                  in|        word|
-|486ea46224d1bb4fb...|               world|        word|
-|8e7ce76b88cc45a23...|             extends|        word|
-|9678937cb2a0316e3...|of leeds * seem like|     context|
-|394e3adb0572ad71b...|          relaxation|        word|
-|cd1bb3012bcfaa0c5...|                know|        word|
-|46c7e618371458094...|           balaclava|        word|
-|97afaaf141802a83c...|long sleeved * an...|     context|
-|6ac2b92e8c851feec...|hearts club * soo...|     context|
-|bf4a21d2bda872994...|down for * reason...|     context|
-|d732ba6fe111240d3...|slightly bizarre ...|     context|
-|e272deecde720ffc7...|                cold|        word|
-|d224cb6547b49e5c4...|set of * cammells...|     context|
-|05f5d06f5c5f013e5...|design challenge ...|     context|
-|57cb64c1e20d0ac7d...|designers confere...|     context|
-|6e317bcd6839e8877...|               books|        word|
-|d90ee9ccf6bea1d29...|                drop|        word|
-|cae1afc1235b4cfbb...|              parade|        word|
-|96a417aa5f0afc227...|   with his * in the|     context|
-|e3a29c3ac2f86b661...|of which * alread...|     context|
-+--------------------+--------------------+------------+
++--------------------+--------------+------------+
+|                  id|         value|type_initial|
++--------------------+--------------+------------+
+|4a94bd1dab161af87...|thsiss * vivek|     context|
+|ac0b52a2ae6ef9999...|            do|        word|
+|99ee2f6396afd770e...|    vivek * do|     context|
+|a3da73976501812cd...|         vivek|        word|
+|56a0b20e83011dee7...|  this * vivek|     context|
+|c971a1992c1cf7879...|    what * you|     context|
+|f029e50fcd09f511f...|           iss|        word|
+|aa19eeaed5564f897...|  issss * what|     context|
+|fa51fd49abf67705d...|            is|        word|
+|9169474b0ce3135dc...|    iss * what|     context|
+|bb0347a468d97e98a...|           you|        word|
+|15eb01de60a1f98fb...|  naame * john|     context|
+|bd1fd9ffb5ecaa7df...|     is * what|     context|
+|59e750a42656cebfc...|          youu|        word|
+|c967e2577123b2d3c...|   what * this|     context|
+|774c4f7a44e4c5572...|   what * yoou|     context|
+|1b4df9a5b02c31564...|       my * is|     context|
+|e7d8bc46059065e56...|      my * iss|     context|
+|bb6f68a6e1187b221...|         naame|        word|
+|96d9632f363564cc3...|          john|        word|
++--------------------+--------------+------------+
 only showing top 20 rows
 
-no of rows are  21875
+no of rows are  29
 +--------+-----+
 |inDegree|count|
 +--------+-----+
-|       1|16678|
+|       1|   18|
+|       3|    4|
 |       4|    1|
-|       2|   18|
+|       2|    6|
 +--------+-----+
 
-16697
-+--------------------+-------------------+
-|                  id|           pagerank|
-+--------------------+-------------------+
-|2c624232cdd221771...|               0.15|
-|4dea5c7cb70f50322...|               0.15|
-|09a2f93dfb40f30e0...|             0.1517|
-|c99d4995981f34f88...|0.27749999999999997|
-|e73d78342d2836bdc...|           0.181875|
-|3ac6de7309a7d7008...|0.27749999999999997|
-|6a187ec05f50ab719...|0.15554347826086956|
-|3ce101acca5fc2f7d...|0.27749999999999997|
-|f05c99eec91b5dd8f...|0.15013492063492062|
-|5aaffbe84fc843f3d...|0.27749999999999997|
-|d27a04b9d752fd73b...|           0.181875|
-|dc207a151550ee183...|0.15179577464788732|
-|e9b8842e4f23c7efa...|             0.1925|
-|0d747fbd5da466874...|0.27749999999999997|
-|67ef99b09f9e0bc99...|0.15028977272727273|
-|e11ba185cb619be4f...|0.15028977272727273|
-|8a857b59e344a7d56...|           0.160625|
-|6b2552a58597fd0a2...|            0.21375|
-|28009121109c196e3...|0.27749999999999997|
-|a07eaab3c35bdbf42...|0.27749999999999997|
-+--------------------+-------------------+
+29
++--------------------+------------------+
+|                  id|          pagerank|
++--------------------+------------------+
+|1533ecf4d0885b408...|0.5218273168102188|
+|c971a1992c1cf7879...|0.6509578221947224|
+|56a0b20e83011dee7...|1.3288967880315516|
+|cb3c73563a403389b...|0.6509578221947224|
+|be27932ed0adb86f0...|0.6509578221947224|
+|749ab2c0d06c42ae3...|1.3546115858376595|
+|1b4df9a5b02c31564...|1.2066693707467686|
+|bb0347a468d97e98a...|0.6509578221947224|
+|4a94bd1dab161af87...|0.9463535901944437|
+|bd1fd9ffb5ecaa7df...|1.1283902501812455|
+|59e750a42656cebfc...|0.6509578221947224|
+|aa19eeaed5564f897...|0.6111835723192361|
+|d60a775b4f45d85d9...|1.7680864312754911|
+|99ee2f6396afd770e...|0.7257099239810054|
+|c967e2577123b2d3c...|0.5213018329707099|
+|9169474b0ce3135dc...|0.6111835723192361|
+|a3da73976501812cd...|1.6354179753845037|
+|96d9632f363564cc3...|0.6260155459010743|
+|774c4f7a44e4c5572...|0.6509578221947224|
+|e7d8bc46059065e56...|0.6596787873264837|
++--------------------+------------------+
 only showing top 20 rows
 
-+--------------------+--------------------+--------+
-|                  id|               value|pagerank|
-+--------------------+--------------------+--------+
-|2bdae7e96a68f09f2...|         70magnitude|    0.15|
-|90e55f332294726de...|['a', 'massive', ...|  0.1275|
-|b37b53dc72564ad53...|['a', 'clod', '*'...|     0.0|
-|3fb6b583a9f63ae21...|['about', 'the', ...|     0.0|
-|72d1b5da6eeaf1789...|                2011|     0.0|
-|8865f110bd2342e67...|['and', 'hearty',...|     0.0|
-|7630054c363d16e87...|['a', 'time', '*'...|     0.0|
-|28c7996e118ac5073...|['about', 'her', ...|     0.0|
-|afebf6666b57adf66...|['a', 'dozen', '*...|     0.0|
-|3f1b44c31baa1338a...|['david', 'miliba...|     0.0|
-|759ac20d1a0a00887...|['an', 'energy', ...|     0.0|
-|8397e35b358d57045...|['be', 'respectfu...|     0.0|
-|41964b8ea37f40d79...|['anniversary', '...|     0.0|
-|d680a2efed84e377e...|['accident', 'and...|     0.0|
-|b2b889e8500642adc...|['be', 'thats', '...|     0.0|
-|c8d21535177959c34...|['baby', 'killer'...|     0.0|
-|120807cbb7115e04b...|['big', 'buck', '...|     0.0|
-|346fdb332f03f40b4...|['chief', 'says',...|     0.0|
-|125067e39a342ee63...|['despite', 'sink...|     0.0|
-|ba7775f2185033fb3...|['became', 'the',...|     0.0|
-+--------------------+--------------------+--------+
-only showing top 20 rows
-
+name
+[{u'what': 0.03571428571428571}, {u'vivek': 0.028571428571428574}, {u'do': 0.0}]
+idss
+[{u'what': 0.0}, {u'vivek': 0.04}, {u'do': 0.0625}]
+you
+[{u'what': 0.0}, {u'vivek': 0.0}, {u'do': 0.1111111111111111}]
+issss
+[{u'what': 0.0}, {u'vivek': 0.05}, {u'do': 0.0}]
+youu
+[{u'what': 0.0}, {u'vivek': 0.0}, {u'do': 0.08333333333333333}]
+iss
+[{u'what': 0.0}, {u'vivek': 0.05}, {u'do': 0.0}]
+is
+[{u'what': 0.0}, {u'vivek': 0.05}, {u'do': 0.0}]
+naame
+[{u'what': 0.028571428571428574}, {u'vivek': 0.028571428571428574}, {u'do': 0.0}]
+john
+[{u'vivek': 0.19957993912781474}, {u'what': 0.03571428571428571}, {u'do': 0.05}]
+yoou
+[{u'what': 0.0}, {u'vivek': 0.0}, {u'do': 0.08333333333333333}]

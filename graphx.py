@@ -15,9 +15,11 @@ import sys
 import hashlib
 from operator import add
 import nlp
+from collections import OrderedDict
+import __builtin__
 
 
-NGRAM = 5
+NGRAM = 3
 THRESHOLD_COUNT = 6
 WORD_TYPES = ["OOV","IV"]
 sc = SparkContext()
@@ -52,7 +54,7 @@ def parseedges(r):
 	r[0] = str(r[0])
 	r[1] = str(r[1])
 	# final_list = [(vertices_df_dictionary[r[0]], vertices_df_dictionary[r[1]], 1)]
-	final_list = [(hashed(r[0]), hashed(r[1]), 1)]
+	final_list = [(hashed(r[0]), hashed(r[1]), 1),(hashed(r[1]), hashed(r[0]), 1)]
 	return final_list
 
 
@@ -88,6 +90,23 @@ def get_word_type(_type, count):
 		return "OOV"
 	else:
 		return "IV"
+
+def getlcscost(n,m):
+	lcs_n_m = len(nlp.lcs(n,m))
+	max_length = __builtin__.max(len(n),len(m))
+	lcsr_n_m = float(lcs_n_m)/float(max_length)
+	edit_n_m = nlp.editex("".join(OrderedDict.fromkeys(n)),"".join(OrderedDict.fromkeys(m)))
+	if edit_n_m !=0:
+		sim_cost_n_m = lcsr_n_m/edit_n_m
+		return sim_cost_n_m
+	return 0
+
+
+def get_pagerank(v,n):
+	r = g.pageRank(resetProbability=0.15, maxIter=10, sourceId=v)
+	c = r.vertices.filter(r.vertices.type == 'IV').orderBy(desc("pagerank"))
+	d = c.rdd.map(lambda x:{x.value: (x.pagerank + getlcscost(n,x.value))})
+	print d.collect()
 
 
 counts_df = sqlContext.createDataFrame(countsrdd, ["value", "count"])
@@ -127,10 +146,14 @@ results = g.pageRank(resetProbability=0.15, tol=0.01)
 # In Spark 1.5+, you can use show(truncate=False) to avoid truncation.
 results.vertices.select("id", "pagerank").show()
 # results.edges.select("src", "dst", "weight").show()
-
+OOV_vertices = g.vertices.filter(g.vertices.type == 'OOV').collect()
+for vertex in OOV_vertices:
+	print vertex.value
+	get_pagerank(vertex.id,vertex.value)
 # Run PageRank for a fixed number of iterations.
-results3 = g.pageRank(resetProbability=0.15, maxIter=10, sourceId=hashed('70magnitude'))
-results3.vertices.select("id","value","pagerank").orderBy(desc("pagerank")).show()
+# results3 = g.pageRank(resetProbability=0.15, maxIter=10, sourceId=hashed('70magnitude'))
+# results3.vertices.select("id","value","pagerank").orderBy(desc("pagerank")).show()
+
 
 
 # Run PageRank personalized for vertex "a"

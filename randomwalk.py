@@ -190,11 +190,12 @@ def constructGraph(list_of_ngrams,ngram_size):
 					B.add_node(w,bipartite=1)
 					WordNode_list[word]=w
 				#Weight 
-				if reap_node==1 and reap_word==1 and (w in B[c]):
-					# print "Testing"
-					B[c][w]['weight'] += 1
-				else:
-					B.add_edge(c, w, weight=1)
+				# if reap_node==1 and reap_word==1 and (w in B[c]):
+				# 	# print "Testing"
+				# 	B[c][w]['weight'] += 1
+				# else:
+				# 	B.add_edge(c, w, weight=1)
+				
 				# bottom_nodes, top_nodes = bipartite.sets(B)
 				# print bottom_nodes
 				# print top_nodes
