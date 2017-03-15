@@ -139,54 +139,9 @@ g1 = g.inDegrees
 g1.groupBy("inDegree").count().show()
 print g1.count()
 
-#Page
-# results = g.pageRank(resetProbability=0.15, maxIter=5)
-# Display resulting pageranks and final edge weights
-# Note that the displayed pagerank may be truncated, e.g., missing the E notation.
-# In Spark 1.5+, you can use show(truncate=False) to avoid truncation.
-# results.vertices.select("id", "pagerank").show()
-# results.edges.select("src", "dst", "weight").show()
-
 
 OOV_vertices = g.vertices.filter(g.vertices.type == 'OOV').collect()
 for vertex in OOV_vertices:
 	print vertex.value
 	get_pagerank(vertex.id,vertex.value)
 
-# Run PageRank for a fixed number of iterations.
-# results3 = g.pageRank(resetProbability=0.15, maxIter=10, sourceId=hashed('70magnitude'))
-# results3.vertices.select("id","value","pagerank").orderBy(desc("pagerank")).show()
-
-
-
-# Run PageRank personalized for vertex "a"
-
-# filtered = vertices_df.rdd.filter(lambda x: x["value"] == "on").collect()
-# print filtered
-# print edges.collect()
-
-
-# v = sqlContext.createDataFrame([
-#   ("a", "Alice", 34),
-#   ("b", "Bob", 36),
-#   ("c", "Charlie", 30),
-# ], ["id", "name", "age"])
-# # Create an Edge DataFrame with "src" and "dst" columns
-# e = sqlContext.createDataFrame([
-#   ("a", "b", "friend"),
-#   ("b", "c", "follow"),
-#   ("c", "b", "follow"),
-# ], ["src", "dst", "relationship"])
-# # Create a GraphFrame
-# from graphframes import *
-# g = GraphFrame(v, e)
-
-# # Query: Get in-degree of each vertex.
-# g.inDegrees.show()
-
-# # Query: Count the number of "follow" connections in the graph.
-# g.edges.filter("relationship = 'follow'").count()
-
-# # Run PageRank algorithm, and show results.
-# results = g.pageRank(resetProbability=0.01, maxIter=20)
-# results.vertices.select("id", "pagerank").show()
