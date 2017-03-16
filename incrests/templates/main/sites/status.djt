@@ -1,0 +1,31 @@
+{% extends "main/layout/base.djt" %}
+{% load staticfiles %}
+{%block content%}
+<div class="ui container">
+	<div class="ui grid">
+	<div class="sixteen wide column">
+	<br>
+	<h1>Status Table</h1>
+	<div class="ui divider"></div>
+	<table class="ui fluid celled padded table">
+		<thead>
+		    <tr>
+			    <th>Id</th>
+			    <th>File Url </th>
+			    <th>Process Id</th>
+			    <th>Status</th>
+		  	</tr>
+		</thead>
+		{% for p in procs %}
+			<tr>
+				<td>{{p.id}}</td>
+				<td>{{p.file.url}}</td>
+				<td>Process - {{p.pid}}</td>
+				<td><button class="ui fluid button {%if p.status%}green{%else%}red{%endif%}">{%if p.status%}Completed{%else%}Ongoing{%endif%}</button></td>
+			</tr> 
+		{% endfor %}
+	</table>
+	</div>
+	</div>
+</div>
+{%endblock%}

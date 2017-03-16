@@ -1,0 +1,21 @@
+{% extends "main/layout/base.djt" %}
+{% load staticfiles %}
+{%block content%}
+<div class="ui container">
+	<br>
+	<div class="ui grid">
+		<h1 class="ui row header">Welcome to File Upload</h1>
+		<div class="ui row divider"></div>
+		<div class="row">
+			<form class="ui form" style="width: 100%;" action="/incrests/uploadpaper/" method="POST" enctype="multipart/form-data">
+					{%csrf_token%}
+					<div class="field">
+					    <label>Upload File</label>
+					    <input type="file" name="textfile">
+					</div>
+				<button class="ui fluid green button" type="submit">Submit</button>
+			</form>
+		</div>
+	</div>
+</div>
+{%endblock%}
