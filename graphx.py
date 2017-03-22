@@ -103,7 +103,7 @@ def getlcscost(n,m):
 
 
 def get_pagerank(v,n):
-	r = g.pageRank(resetProbability=0.0, maxIter=5, sourceId=v)
+	r = g.pageRank(resetProbability=0.3, maxIter=2, sourceId=v)
 	c = r.vertices.filter(r.vertices.type == 'IV')
 	d = c.rdd.map(lambda x:(x.value, (x.pagerank + getlcscost(n,x.value)))).top(2,key = lambda x: x[1])
 	print d
@@ -128,15 +128,16 @@ edges_df = edges_df.groupBy(["src", "dst"]).sum("weight") #aggregating the weigh
 edges_df = edges_df.withColumnRenamed("sum(weight)", "weight")
 
 edges_df.show()
-vertices_df.show()
+print "no of edges are ", edges_df.count()
+# vertices_df.show()
 print "no of rows are ", vertices_df.count()
 
 
 from graphframes import *
 g = GraphFrame(vertices_counts, edges_df)
-g1 = g.inDegrees
+g1 = g.outDegrees
 # g1 = g1.filter(g1.inDegree == 2)
-g1.groupBy("inDegree").count().show()
+g1.groupBy("outDegree").count().show()
 print g1.count()
 
 #Page
@@ -149,8 +150,11 @@ print g1.count()
 
 
 OOV_vertices = g.vertices.filter(g.vertices.type == 'OOV').collect()
+print "length of oov vertices ", len(OOV_vertices)
+i = 0
 for vertex in OOV_vertices:
-	print vertex.value
+	print i, vertex.value
+	i = i + 1
 	get_pagerank(vertex.id,vertex.value)
 
 # Run PageRank for a fixed number of iterations.
