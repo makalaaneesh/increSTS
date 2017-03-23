@@ -20,8 +20,8 @@ import __builtin__
 from datetime import datetime
 
 
-NGRAM = 3
-THRESHOLD_COUNT = 6
+NGRAM = 5
+THRESHOLD_COUNT = 2
 WORD_TYPES = ["OOV","IV"]
 sc = SparkContext()
 sqlContext = SQLContext(sc)
