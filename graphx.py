@@ -17,9 +17,10 @@ from operator import add
 import nlp
 from collections import OrderedDict
 import __builtin__
+from datetime import datetime
 
 
-NGRAM = 3
+NGRAM = 5
 THRESHOLD_COUNT = 6
 WORD_TYPES = ["OOV","IV"]
 sc = SparkContext()
@@ -73,7 +74,7 @@ def create_edge_list(line):
 		edgelist.append(word + "|" + " ".join(ngram))
 	return edgelist
 
-
+start_time = datetime.now()
 
 mixed_input = sqlContext.read.text(sys.argv[2]).rdd.map(lambda r: r[0])
 edge_list_file = mixed_input.flatMap(lambda r: create_edge_list(r))
@@ -148,4 +149,9 @@ for vertex in OOV_vertices:
 	print i, vertex.value
 	i = i + 1
 	get_pagerank(vertex.id,vertex.value)
+
+
+end_time = datetime.now()
+time_delta = end_time - start_time
+print "Total time taken: "+ str(time_delta.seconds)+"s"
 
