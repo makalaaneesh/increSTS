@@ -19,8 +19,8 @@ from collections import OrderedDict
 import __builtin__
 from datetime import datetime
 
-
-NGRAM = 5
+SCORE_THRESHOLD = 0.3
+NGRAM = 3
 THRESHOLD_COUNT = 2
 WORD_TYPES = ["OOV","IV"]
 sc = SparkContext()
@@ -107,15 +107,16 @@ def get_pagerank(v,n):
 	r = g.pageRank(resetProbability=0.3, maxIter=2, sourceId=v)
 	c = r.vertices.filter(r.vertices.type == 'IV')
 	d = c.rdd.map(lambda x:(x.value, (x.pagerank + getlcscost(n,x.value)))).top(2,key = lambda x: x[1])
-	print d
+	# print d, d[0][1]
+	return d[0][0], d[0][1]
 
 
 counts_df = sqlContext.createDataFrame(countsrdd, ["value", "count"])
 vertices_counts = vertices_df.join(counts_df, vertices_df.value == counts_df.value, "left_outer")
 word_type_function = udf(get_word_type, StringType())
 vertices_counts = vertices_counts.withColumn("type", word_type_function("type_initial","count")).select("id", vertices_df["value"], "type")
-vertices_counts.filter(vertices_counts.type != "context").show(n =100)
-print "no of rows are ",vertices_counts.count()
+# vertices_counts.filter(vertices_counts.type != "context").show(n =100)
+# print "no of rows are ",vertices_counts.count()
 
 
 # vertices_df = vertices_df.withColumn("id", monotonically_increasing_id())
@@ -128,27 +129,29 @@ edges_df = sqlContext.createDataFrame(edges,["src", "dst", "weight"])
 edges_df = edges_df.groupBy(["src", "dst"]).sum("weight") #aggregating the weights
 edges_df = edges_df.withColumnRenamed("sum(weight)", "weight")
 
-edges_df.show()
-print "no of edges are ", edges_df.count()
+# edges_df.show()
+# print "no of edges are ", edges_df.count()
 # vertices_df.show()
-print "no of rows are ", vertices_df.count()
+# print "no of rows are ", vertices_df.count()
 
 
 from graphframes import *
 g = GraphFrame(vertices_counts, edges_df)
 g1 = g.outDegrees
 # g1 = g1.filter(g1.inDegree == 2)
-g1.groupBy("outDegree").count().show()
-print g1.count()
+# g1.groupBy("outDegree").count().show()
+# print g1.count()
 
 
 OOV_vertices = g.vertices.filter(g.vertices.type == 'OOV').collect()
-print "length of oov vertices ", len(OOV_vertices)
+# print "length of oov vertices ", len(OOV_vertices)
 i = 0
 for vertex in OOV_vertices:
-	print i, vertex.value
 	i = i + 1
-	get_pagerank(vertex.id,vertex.value)
+	word, score = get_pagerank(vertex.id,vertex.value)
+	if score >= SCORE_THRESHOLD:
+		print vertex.value, word, score
+
 
 
 end_time = datetime.now()
