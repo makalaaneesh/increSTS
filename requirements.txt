@@ -12,6 +12,8 @@ python-dateutil==2.5.3
 python-gnupg==0.3.9
 pytz==2016.7
 PyYAML==3.12
+requests==2.13.0
 simplecosine==1.0
 six==1.10.0
+vaderSentiment==2.5
 wheel==0.24.0
