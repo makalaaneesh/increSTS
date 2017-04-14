@@ -1,1 +1,99 @@
++--------------------+-----+----+
+|                  id|value|type|
++--------------------+-----+----+
+|a3da73976501812cd...|vivek| OOV|
+|82a3537ff0dbce7ee...| name|  IV|
+|45f3549b877d5460f...| idss| OOV|
+|bb0347a468d97e98a...|  you|  IV|
+|1533ecf4d0885b408...|issss| OOV|
+|59e750a42656cebfc...| youu| OOV|
+|f029e50fcd09f511f...|  iss| OOV|
+|fa51fd49abf67705d...|   is|  IV|
+|bb6f68a6e1187b221...|naame| OOV|
+|96d9632f363564cc3...| john| OOV|
+|749ab2c0d06c42ae3...| what|  IV|
+|ac0b52a2ae6ef9999...|   do|  IV|
+|be27932ed0adb86f0...| yoou| OOV|
++--------------------+-----+----+
+
+no of rows are  29
++--------------------+--------------------+------+
+|                 src|                 dst|weight|
++--------------------+--------------------+------+
+|1b4df9a5b02c31564...|82a3537ff0dbce7ee...|     1|
+|96d9632f363564cc3...|bd1fd9ffb5ecaa7df...|     1|
+|59e750a42656cebfc...|d60a775b4f45d85d9...|     4|
+|d60a775b4f45d85d9...|be27932ed0adb86f0...|     1|
+|4a94bd1dab161af87...|45f3549b877d5460f...|     1|
+|507b5423aac395928...|749ab2c0d06c42ae3...|     1|
+|56a0b20e83011dee7...|fa51fd49abf67705d...|     1|
+|cb3c73563a403389b...|ac0b52a2ae6ef9999...|     4|
+|f029e50fcd09f511f...|56a0b20e83011dee7...|     1|
+|15eb01de60a1f98fb...|fa51fd49abf67705d...|     1|
+|a3da73976501812cd...|aa19eeaed5564f897...|     4|
+|774c4f7a44e4c5572...|ac0b52a2ae6ef9999...|     1|
+|a3da73976501812cd...|9169474b0ce3135dc...|     1|
+|bb0347a468d97e98a...|d60a775b4f45d85d9...|     1|
+|749ab2c0d06c42ae3...|507b5423aac395928...|     1|
+|bd1fd9ffb5ecaa7df...|a3da73976501812cd...|     1|
+|56a0b20e83011dee7...|f029e50fcd09f511f...|     1|
+|be27932ed0adb86f0...|d60a775b4f45d85d9...|     1|
+|ac0b52a2ae6ef9999...|774c4f7a44e4c5572...|     1|
+|82a3537ff0dbce7ee...|1b4df9a5b02c31564...|     1|
++--------------------+--------------------+------+
+only showing top 20 rows
+
++--------------------+--------------+------------+
+|                  id|         value|type_initial|
++--------------------+--------------+------------+
+|4a94bd1dab161af87...|thsiss * vivek|     context|
+|ac0b52a2ae6ef9999...|            do|        word|
+|99ee2f6396afd770e...|    vivek * do|     context|
+|a3da73976501812cd...|         vivek|        word|
+|56a0b20e83011dee7...|  this * vivek|     context|
+|c971a1992c1cf7879...|    what * you|     context|
+|f029e50fcd09f511f...|           iss|        word|
+|aa19eeaed5564f897...|  issss * what|     context|
+|fa51fd49abf67705d...|            is|        word|
+|9169474b0ce3135dc...|    iss * what|     context|
+|bb0347a468d97e98a...|           you|        word|
+|15eb01de60a1f98fb...|  naame * john|     context|
+|bd1fd9ffb5ecaa7df...|     is * what|     context|
+|59e750a42656cebfc...|          youu|        word|
+|c967e2577123b2d3c...|   what * this|     context|
+|774c4f7a44e4c5572...|   what * yoou|     context|
+|1b4df9a5b02c31564...|       my * is|     context|
+|e7d8bc46059065e56...|      my * iss|     context|
+|bb6f68a6e1187b221...|         naame|        word|
+|96d9632f363564cc3...|          john|        word|
++--------------------+--------------+------------+
+only showing top 20 rows
+
+no of rows are  29
++--------+-----+
+|inDegree|count|
++--------+-----+
+|       1|   18|
+|       3|    4|
+|       4|    1|
+|       2|    6|
++--------+-----+
+
+29
+vivek
+[(u'is', 0.05), (u'name', 0.028571428571428574)]
+idss
+[(u'is', 0.25), (u'do', 0.0625)]
+issss
+[(u'is', 0.4), (u'what', 0.0)]
+youu
+[(u'you', 0.75), (u'do', 0.08333333333333333)]
+iss
+[(u'is', 0.6666666666666666), (u'what', 0.0)]
+naame
+[(u'name', 0.8), (u'what', 0.028571428571428574)]
+john
+[(u'you', 0.05), (u'do', 0.05)]
+yoou
+[(u'you', 0.75), (u'do', 0.08333333333333333)]
 Completed

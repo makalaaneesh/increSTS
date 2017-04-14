@@ -10,6 +10,10 @@
 			<form class="ui form" style="width: 100%;" action="/incrests/uploadpaper/" method="POST" enctype="multipart/form-data">
 					{%csrf_token%}
 					<div class="field">
+					    <label>Upload Clean File</label>
+					    <input type="file" name="cleantextfile">
+					</div>
+					<div class="field">
 					    <label>Upload File</label>
 					    <input type="file" name="textfile">
 					</div>

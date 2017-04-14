@@ -3,4 +3,5 @@ venv/*
 *.out
 *.pyc
 *.log
+incrests/file/*
 metastore_db/

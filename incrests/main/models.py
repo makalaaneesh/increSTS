@@ -11,6 +11,7 @@ class Process(models.Model):
     Description: Process
     """
     file = models.FileField(upload_to=file_path)
+    clean_file = models.FileField(upload_to=file_path,null=True)
     date = models.DateTimeField(auto_now=True)
     pid = models.CharField(max_length=100,null=True,blank=True)
     status = models.BooleanField(default=False)

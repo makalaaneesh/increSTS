@@ -144,7 +144,7 @@
                 Incre STS
               </h1>
               <h2>Optimized Incre-STS by Cleaning Noisy SocialMedia Text</h2>
-              <div class="ui huge primary button">Try it out <i class="right arrow icon"></i></div>
+              <a href="/incrests/uploadpaper/" class="ui huge primary button">Try it out <i class="right arrow icon"></i></a>
             </div>
 
           </div>
