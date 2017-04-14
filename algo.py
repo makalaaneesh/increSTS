@@ -1,6 +1,6 @@
 import nlp
 import metrics
-
+import sentiment
 
 class Cluster:
 	def __init__(self):
@@ -8,9 +8,13 @@ class Cluster:
 		self.comment_term_vectors = []
 		self.terms = {}
 		self.center = {}
+		self.sentiment_score = 0.0
 
 	def add_comment(self, comment):
 		index = len(self.comments)
+		complete_sentiment = self.sentiment_score* index
+		complete_sentiment = complete_sentiment + sentiment.get_sentiment_score(comment)
+		self.sentiment_score = float(complete_sentiment)/float(index+1)
 		# comment = nlp.preprocess(comment)
 		self.comments.append(comment)
 
@@ -40,6 +44,13 @@ class Cluster:
 
 		# index = self.comments.index(comment)
 		# self.comments.remove(comment)
+		complete_sentiment = self.sentiment_score* index
+		complete_sentiment = complete_sentiment - sentiment.get_sentiment_score(comment)
+		try:
+			self.sentiment_score = float(complete_sentiment)/float(index-1)
+		except:
+			self.sentiment_score = 0
+
 		del self.comments[index]
 		tv =  self.comment_term_vectors[index]
 		# print tv
@@ -233,11 +244,11 @@ if __name__ == "__main__":
 
 	cl = list(clusters)
 	cl.sort(key = lambda c: len(c.comments),reverse = True)
-	f = open("clusters_rw.txt","w")
+	f = open("clusters.txt","w")
 	for i in range(0,16):
 		f.write("\n-------------"+str(i)+"---------------\n")
 		f.write("\n".join(cl[i].comments))
-		f.write("\n--------------------------------\n")
+		f.write("\n--------------[{"+str(cl[i].sentiment_score)+"}]------------------\n")
 
 	f.close()
 
