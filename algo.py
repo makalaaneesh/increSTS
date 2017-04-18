@@ -9,11 +9,21 @@ class Cluster:
 		self.terms = {}
 		self.center = {}
 		self.sentiment_score = 0.0
+		self.emoticonlist = {}
+		with open('emoticonlist') as f:
+			lines = f.readlines()
+			for l in lines:
+				row = l.split(">")
+				self.emoticonlist[row[0]] = row[1]
 
 	def add_comment(self, comment):
 		index = len(self.comments)
 		complete_sentiment = self.sentiment_score* index
-		complete_sentiment = complete_sentiment + sentiment.get_sentiment_score(comment)
+		emoticon_sentiment = sentiment.get_emoticon_score(comment,self.emoticonlist)
+		if emoticon_sentiment > 0:
+			complete_sentiment = complete_sentiment + (emoticon_sentiment + sentiment.get_sentiment_score(comment))/2.0
+		else:
+			complete_sentiment = complete_sentiment + sentiment.get_sentiment_score(comment)
 		self.sentiment_score = float(complete_sentiment)/float(index+1)
 		# comment = nlp.preprocess(comment)
 		self.comments.append(comment)
@@ -44,8 +54,12 @@ class Cluster:
 
 		# index = self.comments.index(comment)
 		# self.comments.remove(comment)
+		emoticon_sentiment = sentiment.get_emoticon_score(comment,self.emoticonlist)
 		complete_sentiment = self.sentiment_score* index
-		complete_sentiment = complete_sentiment - sentiment.get_sentiment_score(comment)
+		if emoticon_sentiment > 0:
+			complete_sentiment = complete_sentiment - (emoticon_sentiment + sentiment.get_sentiment_score(comment))/2.0
+		else:
+			complete_sentiment = complete_sentiment - sentiment.get_sentiment_score(comment)
 		try:
 			self.sentiment_score = float(complete_sentiment)/float(index-1)
 		except:
